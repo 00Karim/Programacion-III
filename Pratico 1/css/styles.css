@@ -2,12 +2,13 @@
 @import url(pages/contacto.css);
 @import url(pages/galeria.css);
 @import url(pages/servicios.css);
+@import url(pages/inicio.css);
 
 body {
     margin: 0;
     padding: 0; 
     box-sizing: border-box;
-  }
+}
 
 /*CSS HEADER*/
 .header{
