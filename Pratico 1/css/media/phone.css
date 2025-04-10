@@ -1,0 +1,16 @@
+@media (max-width: 768px){
+    .nav-links ul{
+        flex-direction: column;
+    }
+    .nav-links ul li{
+        text-align: center;
+        margin: 10px;
+    }
+    .footerNav ul{
+        flex-direction: column;
+    }
+    .footerNav ul li{
+        text-align: center;
+        margin: 10px;
+    }
+}

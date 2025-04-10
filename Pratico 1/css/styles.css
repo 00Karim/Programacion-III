@@ -1,3 +1,8 @@
+@import url(media/phone.css);
+@import url(pages/contacto.css);
+@import url(pages/galeria.css);
+@import url(pages/servicios.css);
+
 body {
     margin: 0;
     padding: 0; 
@@ -138,20 +143,3 @@ footer{
     color: white;
 }
 /*FIN CSS FOOTER*/
-
-@media (max-width: 768px){
-    .nav-links ul{
-        flex-direction: column;
-    }
-    .nav-links ul li{
-        text-align: center;
-        margin: 10px;
-    }
-    .footerNav ul{
-        flex-direction: column;
-    }
-    .footerNav ul li{
-        text-align: center;
-        margin: 10px;
-    }
-}
