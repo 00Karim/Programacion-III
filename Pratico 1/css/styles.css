@@ -20,8 +20,9 @@ nav{
 }
 
 .logo{
-    width: 250px;
-    padding: 10px;
+    width: 150px;
+    padding: 20px;
+    border-radius: 50%;
 }
 
 .nav-links{
@@ -38,6 +39,7 @@ nav{
 }
 
 .nav-links li a{
+    font-size: 1.3em;
     text-decoration: None;
     color: white;
     padding: 5px 0;
@@ -46,7 +48,7 @@ nav{
 
 .nav-links li a::after{
     content: '';
-    background: #ffcc00;
+    background: #1f91ee;
     width: 0;
     height: 2px;
     position: absolute;
