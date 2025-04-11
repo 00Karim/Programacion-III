@@ -9,6 +9,11 @@
       width: 120px; 
       margin-bottom: 10px;
     }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: 1fr !important; 
+    }
   
     .nav-links {
       display: flex;
