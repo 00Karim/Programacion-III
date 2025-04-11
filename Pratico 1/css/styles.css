@@ -68,6 +68,32 @@ nav{
 .nav-links li a:hover::after{
     width: 100%;
 }
+
+.mobile-menu{
+    display:none;
+    flex-direction: column;
+    background:#0f3d5c;
+    padding: 1rem;
+}
+
+.mobile-menu.show{
+    display:flex;
+}
+
+.hamburger {
+    cursor: pointer;
+    width: 30px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+  }
+
+.hamburger span {
+    background: white;
+    height: 3px;
+    border-radius: 2px;
+  }
 /*FIN CSS HEADER*/
 
 

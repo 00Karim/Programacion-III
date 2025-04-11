@@ -1,4 +1,26 @@
+
+.container-inicio{
+    display: flex;
+    align-items: center;
+}
+
+.container-imagen-inicio{
+    display: flex;
+    justify-content: flex-start;
+    width: 80%;
+}
+
+.container-texto-inicio{
+    flex: 1;
+}
+
 .container-imagen-inicio img{
     width: 100%;
-    height: auto;
+    height: 33%;
 }
+
+.container-texto-inicio p{
+    font-size:xx-large;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
