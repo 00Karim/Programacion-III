@@ -1,8 +1,9 @@
-@import url(media/phone.css);
+@import url(media/tablet.css);
 @import url(pages/contacto.css);
 @import url(pages/galeria.css);
 @import url(pages/servicios.css);
 @import url(pages/inicio.css);
+@import url(pages/categorias.css);
 
 body {
     margin: 0;

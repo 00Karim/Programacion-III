@@ -1,0 +1,67 @@
+.formulario1{
+    background-image: url(../../img/comidaFondo.jpg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.formulario2{
+    background-image: url(../../img/objetosFondo.jpg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.formulario3{
+    background-image: url(../../img/regalosFondo.jpg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: -0px;
+}
+
+.formulario4{
+    background-image: url(../../img/bebidasFondo.jpg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.formulario5{
+    background-image: url(../../img/bebidasFondo.jpg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.formulario6{
+    background-image: url(../../img/medicamentosFondo.jpeg);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.formulario1, .formulario2, .formulario3, .formulario4, .formulario5, .formulario6{
+    display: flex;
+    justify-content: center;
+    align-items: center;          
+    height: 100vh; 
+}
+
+.container-form{
+    background-color: rgba(255, 255, 255, 0.478);
+    padding: 20px;
+    border-radius: 10%;
+}
+
+.container-form form{
+    display: flex;
+    flex-direction: column;   
+    align-items: center;    
+    text-align: center; 
+    justify-content: center;
+}
+
+.container-form .campo-formulario{
+    padding: 10px;
+}

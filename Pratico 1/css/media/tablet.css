@@ -1,0 +1,25 @@
+@media (max-width: 768px){
+
+    /*FOOTER Y HEADER RESPONSIVE*/
+    .nav-links ul{
+        flex-direction: column;
+    }
+    .nav-links ul li{
+        text-align: center;
+        margin: 10px;
+    }
+    .footerNav ul{
+        flex-direction: column;
+    }
+    .footerNav ul li{
+        text-align: center;
+        margin: 10px;
+    }
+    /*FIN FOOTER Y HEADER RESPONSIVE*/
+
+
+    .formulario1, .formulario2, .formulario3, .formulario4, .formulario5, .formulario6{
+        background-position: center center; /*De esta manera el fondo de patalla sigue estando centrado cuando la pantalla se hace mas chica*/
+    }
+}
+

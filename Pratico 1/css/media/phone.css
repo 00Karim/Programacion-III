@@ -1,16 +1,26 @@
-@media (max-width: 768px){
-    .nav-links ul{
-        flex-direction: column;
+@media (max-width: 550px) {
+    .nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .nav-links ul li{
-        text-align: center;
-        margin: 10px;
+  
+    .logo {
+      width: 120px; 
+      margin-bottom: 10px;
     }
-    .footerNav ul{
-        flex-direction: column;
+  
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-left: 0;
+      gap: 10px; 
     }
-    .footerNav ul li{
-        text-align: center;
-        margin: 10px;
+  
+    .nav-links li {
+      list-style: none;
+      text-align: center;
     }
-}
+  }
+  /*No esta funcionando, los links y el logo no se apilan en el header :(*/
