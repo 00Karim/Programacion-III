@@ -81,6 +81,7 @@ nav{
     background:#0f3d5c;
     align-items: center;
     gap: 2rem;
+    z-index: 999;
 }
 
 .mobile-menu.show{

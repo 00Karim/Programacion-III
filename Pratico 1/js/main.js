@@ -6,6 +6,10 @@ const formulario5 = document.querySelector(".formulario5")
 const formulario6 = document.querySelector(".formulario6")
 const formularios = [formulario1, formulario2, formulario3, formulario4, formulario5, formulario6]
 
+function toggleMenu() {
+    document.getElementById("mobile-menu").classList.toggle("show");
+}
+
 function cambio_de_formulario(formulario_actual){
     switch(formulario_actual){ // Se le va a agregar el estilo "display: none;" a todos los formularios y luego se le va a sacar ese estilo al formulario elegido asi es el unico visible
         case 1:
