@@ -44,6 +44,12 @@ const form_correspondiente = servicio_seleccionado.get("form"); //Extraemos solo
 const numero_form = parseInt(form_correspondiente); //Lo convertimos en int para que funcione el switch statement
 cambio_de_formulario(numero_form) //Llamamos a la funcion con el valor correspondiente
 
+document.querySelectorAll("form").forEach(form => {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Formulario enviado correctamente");
+    });
+  });
 
 // formulario1.style.display = "none";
 // formulario2.style.removeProperty("display")

@@ -70,14 +70,62 @@ nav{
 }
 
 .mobile-menu{
+    justify-content: center;
+    position:fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 40vw;
     display:none;
     flex-direction: column;
     background:#0f3d5c;
-    padding: 1rem;
+    align-items: center;
+    gap: 2rem;
 }
 
 .mobile-menu.show{
     display:flex;
+}
+
+.nav-links-mobile{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 200px;
+}
+
+.nav-links-mobile ul{
+    list-style-type: none;
+}
+
+.nav-links-mobile li{
+    display: block;
+    margin: 20px 0;
+}
+
+.nav-links-mobile li a{
+    font-size: 1.5em;
+    text-decoration: None;
+    color: white;
+    padding: 10px 0;
+}
+
+.nav-links-mobile li a::after{
+    content: '';
+    background: #129bd1;
+    width: 0;
+    height: 2px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transition: 0.5s;
+}
+
+.nav-links-mobile li a:hover::after{
+    width: 100%;
 }
 
 .hamburger {
@@ -87,13 +135,19 @@ nav{
     flex-direction: column;
     justify-content: space-between;
     height: 20px;
-  }
+}
 
 .hamburger span {
     background: white;
     height: 3px;
     border-radius: 2px;
-  }
+}
+
+.mobile-menu .hamburger {
+    margin-top: 50px !important;
+    cursor: pointer;
+    width: 30px;
+}
 /*FIN CSS HEADER*/
 
 
