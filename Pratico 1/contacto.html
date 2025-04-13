@@ -54,11 +54,52 @@
                         <input type="email" id="mail_form" name="email"><br>
                     </div>
                     <div class="campo-formulario">
+                        <label for="tel_form">Telefono:</label><br>
+                        <input type="tel" id="tel_form" name="telefono"><br>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="motivo_form">Seleccione una categoria:</label><br>
+                        <select name="motivo" class="select-categoria">
+                            <option value="consulta">Consulta</option>
+                            <option value="problema_entrega">Problema con una entrega</option>
+                            <option value="soporte">Soporte técnico</option>
+                            <option value="sugerencia">Sugerencia</option>
+                            <option value="otro">Otro</option>
+                          </select><br>
+                    </div>
+                    <div class="campo-formulario">
                         <label for="msj_form">Mensaje:</label><br>
                         <textarea name="msj_form" rows="10" cols="30"></textarea><br><br>
                     </div>
-                    <div class="boton-formulario">
-                        <input type="submit" value="Enviar">
+                    <div class="campo-formulario">
+                        <label>Seleccioná el tipo de servicio del que se trata tu mensaje:</label><br>
+                    
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="comida" required> Comida
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="objetos_olvidados"> Objetos olvidados
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="regalo"> Regalo
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="bebidas"> Bebidas
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="documentos"> Documentos
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="medicina"> Medicina
+                        </label><br>
+                        <label class="radio-option">
+                            <input type="radio" name="categoria_servicio" value="otro_servicio"> Otro
+                        </label><br>
+                    </div>
+                    
+                    <div class="botones-formulario">
+                        <input type="submit" value="Enviar" class="btn-formulario">
+                        <button type="reset" class="btn-formulario">Resetear</button>
                     </div>
                 </form>
             </div>
