@@ -5,6 +5,7 @@
 @import url(pages/servicios.css);
 @import url(pages/inicio.css);
 @import url(pages/categorias.css);
+@import url(pages/acerca.css);
 
 body {
     margin: 0;

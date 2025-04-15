@@ -41,9 +41,9 @@
     display: block;
     margin: 5px 0;
     padding: 6px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     border-radius: 6px;
-    background-color: #3dd2ec;
+    background-color: #ffffff;
     transition: background-color 0.2s, border-color 0.2s;
 }
 
@@ -73,7 +73,7 @@
 .btn-formulario {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #478af5;
+    background-color: #0f3d5c;
     color: white;
     border: none;
     border-radius: 8px;

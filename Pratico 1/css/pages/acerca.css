@@ -1,0 +1,18 @@
+.container-acerca{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.container-imagen-acerca{
+
+}
+
+.imagen1{
+    width: 200px;
+    height: auto;
+}
+
+.container-texto-acerca {
+    
+}
