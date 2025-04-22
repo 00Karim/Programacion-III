@@ -20,9 +20,6 @@
 }
 
 .container-imagen-inicio p{
-    /*position: absolute;
-    top: 500px; 
-    left: 800px;*/
     font-size:xx-large;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: white;
@@ -40,6 +37,7 @@
     mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
     width: 100%;
     height: auto;
+    display: block;
 }
 
 .container-texto-inicio p{
