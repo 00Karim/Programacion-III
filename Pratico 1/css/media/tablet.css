@@ -1,4 +1,10 @@
-@media (max-width: 768px){
+/*ESTILO ESPECIFICO PARA EL IPAD AIR*/
+@media (max-width: 820px){
+    #parrafo-inicio{
+        width: 250px;
+    }
+}
+@media (max-width: 767px){
 
     /*FOOTER Y HEADER RESPONSIVE*/
     .nav-links ul{
@@ -17,9 +23,16 @@
     }
     /*FIN FOOTER Y HEADER RESPONSIVE*/
 
+    #parrafo-inicio{
+        font-size:large;
+        width: 250px;
+    }
+
 
     .formulario1, .formulario2, .formulario3, .formulario4, .formulario5, .formulario6{
         background-position: center center; /*De esta manera el fondo de patalla sigue estando centrado cuando la pantalla se hace mas chica*/
     }
 }
+
+
 

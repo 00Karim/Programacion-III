@@ -25,6 +25,11 @@
     padding: 0px 20px;
   } 
 
+  #parrafo-inicio{
+    font-size: medium;
+    width: 150px;
+  }
+
   .nav-links {
     display: none;
     flex-direction: column;
