@@ -1,18 +1,23 @@
-.container-acerca{
+.container-acerca {
     display: flex;
     align-items: center;
-    justify-content: center
-}
+    justify-content: space-between;
+    gap: 20px; 
+    padding-bottom: 20px;
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
 
-.container-imagen-acerca{
-
-}
-
-.imagen1{
-    width: 200px;
-    height: auto;
-}
-
-.container-texto-acerca {
+  .container-texto-acerca{
+    padding: 2%;
+    font-size: 150%;
+    width: 100%;
+    background-color: #0f3d5ca7;
+    border-radius: 20px;
+    border-color: white;
+  }
     
-}
+  .container-imagen-acerca img {
+    width: 100%;
+    border-radius: 20px;
+  }
