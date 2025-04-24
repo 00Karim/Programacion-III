@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Formulario</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h2>Formulario de Registro</h2><br>
+    <form id="formulario">
+        
+        <label>Nombre:</label>
+        <input type="text" id="nombre">
+        <div id="error-nombre" class="error"></div>
+    
+        <label>Email:</label>
+        <input type="text" id="email">
+        <div id="error-email" class="error"></div>
+    
+        <label>Edad:</label>
+        <input type="number" id="edad">
+        <div id="error-edad" class="error"></div>
 
-    <div class="container-button">
-        <button>Aplicar JS</button>
-    </div>
+    <button type="submit">Enviar</button>
+  </form>
 
-    <script type="module" src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
