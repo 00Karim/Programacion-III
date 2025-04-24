@@ -1,20 +1,14 @@
-const botonAplicarJS = document.querySelector(".container-button button");
-const botonOriginal = botonAplicarJS.innerText;
+const lista = document.getElementById("lista-input");
+const botonInput = document.getElementById("botonInput");
 
-let activado = false;
-botonAplicarJS.addEventListener("click", () => {
-    if (!activado){
-        activado = true;
-        
-        //ACA VAN LOS CAMBIOS QUE SE APLICAN CON JS
-
-        botonAplicarJS.innerText = "Sacar JS";
-    }
-    else{
-        activado = false;
-        
-        // ACA SE DEVUELVE A LA NORMALIDAD
-
-        botonAplicarJS.innerText = botonOriginal;
-    }
+botonInput.addEventListener("click", () => {
+    let nuevoItemLista = document.createElement("li");
+    let nuevoBoton = document.createElement("button");
+    let inputUsuario = (document.getElementById("tagInput")).value
+    nuevoItemLista.textContent = inputUsuario + " ";
+    nuevoBoton.textContent = "Eliminar";
+    nuevoBoton.addEventListener("click", () => {
+        nuevoItemLista.remove();
+    })
+    lista.appendChild(nuevoItemLista).appendChild(nuevoBoton);
 })
