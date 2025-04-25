@@ -1,5 +1,54 @@
-.container-button{
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
     display: flex;
     justify-content: center;
-    padding-top: 50px;
+    align-items: flex-start;
+    height: 100vh;
+    padding-top: 40px;
+}
+  
+.contenedor {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+}
+  
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+  
+input[type="text"] {
+    flex: 1;
+    padding: 8px;
+}
+  
+button {
+    padding: 8px 12px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+   
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+  
+li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+  
+li.completado {
+    text-decoration: line-through;
+    color: black;
+    background-color: green;
 }

@@ -1,20 +1,19 @@
-const botonAplicarJS = document.querySelector(".container-button button");
-const botonOriginal = botonAplicarJS.innerText;
-
-let activado = false;
-botonAplicarJS.addEventListener("click", () => {
-    if (!activado){
-        activado = true;
-        
-        //ACA VAN LOS CAMBIOS QUE SE APLICAN CON JS
-
-        botonAplicarJS.innerText = "Sacar JS";
+document.getElementById('form-tarea').addEventListener('submit', function(event) {
+    event.preventDefault();
+  
+    const input = document.getElementById('nueva-tarea');
+    const texto = input.value.trim();
+  
+    if (texto !== "") {
+      const li = document.createElement('li');
+      li.textContent = texto;
+  
+      li.addEventListener('click', function() {
+        li.classList.toggle('completado');
+      });
+  
+      document.getElementById('lista-tareas').appendChild(li);
+      input.value = "";
     }
-    else{
-        activado = false;
-        
-        // ACA SE DEVUELVE A LA NORMALIDAD
-
-        botonAplicarJS.innerText = botonOriginal;
-    }
-})
+  });
+  
