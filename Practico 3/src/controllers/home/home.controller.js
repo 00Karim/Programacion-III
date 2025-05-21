@@ -1,4 +1,3 @@
-
 // controladores
 const home = async (req, res) => {
     res.render('index', { 
@@ -9,10 +8,10 @@ const home = async (req, res) => {
             'Descripción de la característica 1' ,
             'Descripción de la característica 2',
             'Descripción de la característica 3'
-            
         ]
     });
 }
+
 module.exports = {
    home
 }

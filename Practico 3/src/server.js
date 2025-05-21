@@ -1,12 +1,17 @@
 const  express = require('express');
 const  dotenv = require('dotenv');
+const path = require('path')
 const rutaPacientes = require('./routes/pacientes.route.js')
 const home = require('./routes/home.routes.js');
 const morgan = require('morgan');
-dotenv.config()
+dotenv.config({ path: path.resolve(__dirname, '../.env.template') });
+
+console.log('TEMPLATE from process.env:', process.env.TEMPLATE);
 
 class Server {
-  constructor (template=process.env.TEMPLATE || 'ejs') {
+  constructor (template=process.env.TEMPLATE) {
+    console.log("Template selected", template);
+    
     this.app = express()
     this.port = process.env.PORT || 3001
     this.middleware()
@@ -26,10 +31,9 @@ class Server {
        require.resolve(template);
         
        this.app.set('view engine', template)
-       this.app.set('views', './src/views/'+template)
+       this.app.set('views', path.join(__dirname, `views/${template}`))
      }catch (error) {
         console.log('Error al configurar el motor de plantillas:',template)
-        
       }
 
   }
@@ -41,8 +45,8 @@ class Server {
 
   rutas () {
     this.app.use('/api/v1/pacientes', rutaPacientes)
-    this.app.use('/',home)
- 
+    this.app.use('/', home)
+    
     // aca van las otras rutas
 
   }
