@@ -1,4 +1,3 @@
-// controladores
 const home = async (req, res) => {
     res.render('index', { 
         title: 'Mi aplicación Express',

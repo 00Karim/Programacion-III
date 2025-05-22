@@ -1,4 +1,5 @@
 const Persona = require('./../mock/entities/paciente.entity.js');
+const jwt = require('jsonwebtoken')
 
 class PacientesModel {
   constructor() {
@@ -6,6 +7,36 @@ class PacientesModel {
     this.data.push(new Persona("123456787","Sergio","Antozzi","email@gmail.com",1));
     this.id = 2;
   }
+
+  findByEmail = (email, password) => {
+    const paciente = this.data.find(p=>p.email===email && p.password===password)
+    //TODO: Corroborar que exista paciente con try catch
+    return paciente;
+  }
+
+  validate = (email, password) => {
+    try {
+
+      const userFound = this.findByEmail(email, password);
+      
+      if (!userFound || userFound.password == null) { 
+          throw new Error("wrong email or password");
+      }
+        
+        //payload, secreto, tiempo de expiracion const payload={
+      const payLoad = {
+        userId: userFound._id,
+        userEmail: userFound.email,
+      };
+      const token = jwt.sign(
+        payload, "palabraSecreta",
+        {expiresIn: "24h",}
+      );
+    return token;
+    } catch (error) {
+    throw error;
+    }
+  };
   // crea un dato nuevo (alta de cliente)
   create(paciente) {
     //TODO: verificar que no sea nulo si es nulo tierar excepcion

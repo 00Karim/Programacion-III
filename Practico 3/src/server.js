@@ -3,6 +3,7 @@ const  dotenv = require('dotenv');
 const path = require('path')
 const rutaPacientes = require('./routes/pacientes.route.js')
 const home = require('./routes/home.routes.js');
+const login = require('./routes/login.routes.js')
 const morgan = require('morgan');
 dotenv.config({ path: path.resolve(__dirname, '../.env.template') });
 
@@ -41,12 +42,13 @@ class Server {
     // this.app.use('/', express.static('public'))
     this.app.use(express.json())
     this.app.use(morgan('dev'))
+    this.app.use(express.static(path.resolve(__dirname, 'public')));
   }
 
   rutas () {
     this.app.use('/api/v1/pacientes', rutaPacientes)
     this.app.use('/', home)
-    
+    this.app.use('/login', login)
     // aca van las otras rutas
 
   }

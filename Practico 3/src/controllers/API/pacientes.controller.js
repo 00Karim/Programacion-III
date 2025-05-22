@@ -2,7 +2,7 @@ const pacientesModel = require('./../../models/mock/pacientes.models.js')
 const Paciente = require('./../../models/mock/entities/paciente.entity.js')
 class PacientesController {
     async list(req, res) {
-
+        
         res.status(200).json(await pacientesModel.list());
     }
     async create(req, res) {
