@@ -50,7 +50,6 @@ class Server {
     this.app.use('/', home)
     this.app.use('/login', login)
     // aca van las otras rutas
-
   }
 
   listen () {

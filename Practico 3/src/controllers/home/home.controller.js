@@ -1,12 +1,14 @@
 const home = async (req, res) => {
+    const turnos = [{nombre: "Juan Pérez", doctor: "Dra. González", fecha: "08/06/2025"}]
     res.render('index', { 
-        title: 'Mi aplicación Express',
-        message: '¡Hola desde el servidor!' ,
+        turnos,
+        title: 'Buscador de turnos',
+        message: 'Buscador de turnos' ,
         showFeatures: true,
         features: [
-            'Descripción de la característica 1' ,
-            'Descripción de la característica 2',
-            'Descripción de la característica 3'
+            'Busca tus turnos por dni o por nombre' ,
+            'Mira la hora de tu consulta',
+            'Mira que doctor te va a atender'
         ]
     });
 }

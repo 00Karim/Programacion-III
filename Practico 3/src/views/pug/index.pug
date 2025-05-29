@@ -3,21 +3,74 @@ html(lang="es")
     head
         title= title
         meta(charset="utf-8")
-        link(rel="stylesheet", href="/css/style.css")
+        link(rel="stylesheet", href="/css/index.css")
     body
-        h1= message
-        h2 Estoy en PUG
-        p Bienvenido a nuestra aplicación
+        div.container-texto
+            h1= message
 
-        if showFeatures
-            h2 Características principales:
-            ul
-                each feature in features
-                    li= feature
-        else
-            p No hay características disponibles.
+            if showFeatures
+                h2 Descripcion:
+                ul
+                    each feature in features
+                        li= feature
+            else
+                p No hay características disponibles.
             
         //- Esto es un comentario (no se renderiza en el HTML)
-        
-        footer
-            p © #{new Date().getFullYear()} Mi Aplicación
+        div.container-buscador 
+            h1 Buscar turnos
+            div.container-buscador-botones
+                div 
+                    button(onclick="mostrarFormulario('formDni')") Buscar por dni 
+                div 
+                    button(onclick="mostrarFormulario('formNombre')") Buscar por nombre 
+            div.container-buscador-formularios
+                //- formulario para buscar turnos por DNI
+                form#formDni(action="/buscar/dni" method="GET" style="display:block")
+                    label(for="dni") DNI:
+                    input(type="text" name="dni" id="dni" required)
+                    button(type="submit") Buscar
+
+                //- formulario para buscar turnos por Nombre
+                form#formNombre(action="/buscar/nombre" method="GET" style="display:none")
+                    label(for="nombre") Nombre:
+                    input(type="text" name="nombre" id="nombre" required)
+                    button(type="submit") Buscar
+
+            div.container-tabla
+                if turnos.length
+                    table
+                        thead
+                            tr
+                                th Nombre
+                                th Doctor
+                                th Fecha
+                        tbody
+                            each turno in turnos
+                                tr
+                                    td= turno.nombre
+                                    td= turno.doctor
+                                    td= turno.fecha
+                else
+                    p No hay turnos disponibles.
+            footer
+                p © #{new Date().getFullYear()} Buscador de turnos 
+
+        script.
+            function mostrarFormulario(id) {
+                console.log("Mostrando formulario:", id);
+    
+                let formDni = document.getElementById('formDni');
+                let formNombre = document.getElementById('formNombre');
+
+                if (id === 'formDni') {
+                    formDni.style.display = 'block';
+                    formNombre.style.display = 'none';
+                }
+
+                if (id === 'formNombre') {
+                    formNombre.style.display = 'block';
+                    formDni.style.display = 'none';
+                }
+            }
+            

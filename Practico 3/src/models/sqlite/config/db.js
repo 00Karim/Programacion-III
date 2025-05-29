@@ -8,6 +8,8 @@ const sequelize = new Sequelize({
 });
 
 const connectDB = async () => {
+  require('./../entities/paciente.entity.js');
+  require('./../entities/turno.entity.js');
   try {
     await sequelize.sync();
     console.log('Base de datos conectada.');
