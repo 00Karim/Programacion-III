@@ -1,18 +1,89 @@
-const {Paciente} = require('../sqlite/entities/paciente.entity.js');
+const { Paciente } = require('../sqlite/entities/paciente.entity.js');
 
-class PacientesModel{
-  getPacientes =  ()=>{
-    const users = Paciente.findAll();
-    return users;
-  }
+// SE CONTROLA SI EXISTE UN PACIENTE CON UN DNI EN EL CONTROLADOR, ACA NO
 
-  findByEmail = (email, password) => {
-    const paciente = this.data.find(p=>p.email===email && p.password===password)
-    //TODO: Corroborar que exista paciente con try catch
-    return paciente;
-  }
-//TODO: agregar operaciones CRUD
+class PacientesModel {
+
+    getPacientes = () => {
+        console.log("ENTRE AL GET PACIENTES");
+        const pacientes = Paciente.findAll();
+	    return pacientes;
+    } // TODO: No se, fijarse si es necesario agregar un try catch
+
+    encontrarPorDni = async (dni) => {
+        try {
+            const paciente = await Paciente.findOne({
+            where: { dni: dni }
+        });
+        return paciente;
+        } 
+        catch (error) {
+            console.log('Error al buscar paciente:', error.message);
+            throw error;
+        }
+    };
+
+    borrarPaciente = async (dni) => {
+        try {
+            const deletedCount = await Paciente.destroy({
+                where: { dni }
+            });
+
+            return { mensaje: `Paciente con DNI ${dni} eliminado correctamente.` };
+        } 
+        catch (error) {
+            console.log('Error al eliminar el paciente:', error.message);
+            throw error;
+        }
+        };
+
+    crearPaciente = async (dni, nombre, email) => {
+        try {
+            const nuevoPaciente = await Paciente.create({
+                dni,
+                nombre,
+                email
+            });
+            return nuevoPaciente;
+        } 
+        catch (error) {
+            console.log('Error al crear paciente:', error.message);
+            throw error;
+        }
+    };
+
+    actualizarNombre = async (dni, nuevoNombre) => {
+        try {
+            const paciente = await Paciente.findOne({ where: { dni } });
+
+            paciente.nombre = nuevoNombre;
+            await paciente.save();
+
+            console.log('Nombre actualizado correctamente.');
+            return paciente;
+        } 
+        catch (error) {
+            console.log('Error al actualizar el nombre: ', error.message);
+            throw error;
+        }
+    }
+
+    actualizarEmail = async (dni, nuevoEmail) => {
+        try {
+            const paciente = await Paciente.findOne({ where: { dni } });
+
+            paciente.email = nuevoEmail;
+            await paciente.save();
+
+            console.log('Email actualizado correctamente.');
+            return paciente;
+        } 
+        catch (error) {
+            console.log('Error al actualizar el Email: ', error.message);
+            throw error;
+        }
+    }
 }
-  module.exports = {
-    PacientesModel
-  }
+// TODO: Chequear que el dni no exista y si existe devolver error
+
+module.exports = new PacientesModel();

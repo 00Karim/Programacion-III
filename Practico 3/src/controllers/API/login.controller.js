@@ -1,4 +1,4 @@
-const pacientesModels = require("../../models/mock/pacientes.models");
+const pacientesModels = require("../../models/sqlite/paciente.model");
 
 const login = async (req, res) => {
     res.render('index2');
