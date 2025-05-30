@@ -14,6 +14,10 @@ const Turno = sequelize.define('Turno', {
   dni: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  doctor: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 });
 

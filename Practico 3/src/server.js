@@ -4,6 +4,7 @@ const path = require('path')
 const rutaPacientes = require('./routes/pacientes.route.js')
 const home = require('./routes/home.routes.js');
 const login = require('./routes/login.routes.js')
+const turnos = require('./routes/turnos.routes.js')
 const morgan = require('morgan');
 dotenv.config({ path: path.resolve(__dirname, '../.env.template') });
 
@@ -49,6 +50,7 @@ class Server {
     this.app.use('/pacientes', rutaPacientes)
     this.app.use('/', home)
     this.app.use('/login', login)
+    this.app.use('/turnos', turnos)
     // aca van las otras rutas
   }
 
