@@ -1,6 +1,22 @@
 const pacientesModel = require('./../../models/sqlite/paciente.model.js')
 
 class PacientesController {
+
+    async renderizar(req, res){
+        const turnos = [{nombre: "Juan Pérez", doctor: "Dra. González", fecha: "08/06/2025"}] // TODO: Esto despues va a ser inncesario ya que se van a mostrar los turnos solo cuando el usuario lo pida, esto es solo para
+        res.render('index3', {
+            turnos,
+            title: 'Buscador de turnos',
+            message: 'Buscador de turnos' ,
+            showFeatures: true,
+            features: [
+                'Busca tus turnos por dni o por nombre' ,
+                'Mira la hora de tu consulta',
+                'Mira que doctor te va a atender'
+            ]
+        });
+    }
+
     async mostrarTodos(req, res) {
         console.log("Entre a mostrar todos en pacientesController");
         res.status(200).json(await pacientesModel.getPacientes());

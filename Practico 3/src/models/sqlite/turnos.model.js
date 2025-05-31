@@ -16,36 +16,27 @@ class TurnosModel {
                 throw error;
             }
         };
-
-        encontrarPorNombre = async (nombre) => {
-            try {
-                const turno = await Turno.findOne({
-                where: { nombre: nombre }
+        
+        borrarTurno = async (id) => {
+            await Turno.destroy({
+                where: { id: id }
             });
-            return turno;
+        }; // TODO: Hacer el TRY CATCH
+        
+        crearTurno = async (fecha, dni, doctor) => {
+            try {
+                const nuevoTurno = await Turno.create({
+                    fecha,
+                    dni,
+                    doctor
+                });
+                return nuevoTurno;
             } 
             catch (error) {
-                console.log('Error al buscar el turno:', error.message);
+                console.log('Error al crear el turno:', error.message);
                 throw error;
             }
-        };
-        
-        borrarTurno = async (dni) => {
-            
-            };
-        
-        crearTurno = async (dni, fecha, nombre, doctor) => {
-            
-        };
-
-        actualizarFecha = async (dni, nuevaFecha) => {
-            
-        }
-
-        actualizarDoctor = async (dni, nuevoDoctor) => {
-            
-        }
-            
+        };         
 }
 
 module.exports = new TurnosModel();

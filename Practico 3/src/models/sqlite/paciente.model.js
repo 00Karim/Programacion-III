@@ -25,7 +25,7 @@ class PacientesModel {
 
     borrarPaciente = async (dni) => {
         try {
-            const deletedCount = await Paciente.destroy({
+            await Paciente.destroy({
                 where: { dni }
             });
 

@@ -1,0 +1,113 @@
+doctype html
+html(lang="es")
+    head
+        title= title
+        meta(charset="utf-8")
+        link(rel="stylesheet", href="/css/index3.css")
+    body
+        div.estructura-fila 
+            div.estructura-columna-izquierda
+                div.container-buscador 
+                    h1 Administrar pacientes
+                    div.container-buscador-botones
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Buscar por dni 
+                        div 
+                            button(onclick="mostrarFormulario('formNombre')") Buscar por nombre
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Borrar paciente 
+                        div 
+                            button(onclick="mostrarFormulario('formNombre')") Modificar paciente
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Agregar paciente 
+                        //- div 
+                        //-     a(href="/login")
+                        //-         button(onclick="") Estoy registrado
+                    div.container-buscador-formularios
+                        //- formulario para buscar turnos por dni
+                        form#formDni(action="/buscar/dni" method="GET" style="display:block")
+                            label(for="dni") DNI:
+                            input(type="text" name="dni" id="dni" required)
+                            button(type="submit" onclick="devolverTurnoPorDni()") Buscar
+
+                        //- formulario para buscar turnos por nombre
+                        form#formNombre(action="/buscar/nombre" method="GET" style="display:none")
+                            label(for="nombre") Nombre:
+                            input(type="text" name="nombre" id="nombre" required)
+                            button(type="submit") Buscar
+                    h1 Administrar turnos
+                    div.container-buscador-botones
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Buscar por id 
+                        div 
+                            button(onclick="mostrarFormulario('formNombre')") Buscar por dni
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Borrar turno 
+                        div 
+                            button(onclick="mostrarFormulario('formNombre')") Modificar turno
+                        div 
+                            button(onclick="mostrarFormulario('formDni')") Agregar turno 
+                        //- div 
+                        //-     a(href="/login")
+                        //-         button(onclick="") Estoy registrado
+                    div.container-buscador-formularios
+                        //- formulario para buscar turnos por dni
+                        form#formDni(action="/buscar/dni" method="GET" style="display:block")
+                            label(for="dni") DNI:
+                            input(type="text" name="dni" id="dni" required)
+                            button(type="submit" onclick="devolverTurnoPorDni()") Buscar
+
+                        //- formulario para buscar turnos por nombre
+                        form#formId(action="/buscar/id" method="GET" style="display:none")
+                            label(for="nombre") Id:
+                            input(type="text" name="id" id="id" required)
+                            button(type="submit") Buscar
+
+            div.container-tabla
+                if turnos.length
+                    table
+                        thead
+                            tr
+                                th Nombre
+                                th Doctor
+                                th Fecha
+                        tbody
+                            each turno in turnos
+                                tr
+                                    td= turno.nombre
+                                    td= turno.doctor
+                                    td= turno.fecha
+                else
+                    p No hay turnos disponibles.
+        footer
+            p © #{new Date().getFullYear()} Buscador de turnos  
+            //-// TODO: Poner en la posicion correcta el footer
+        script.
+            function mostrarFormulario(id) {
+                console.log("Mostrando formulario:", id);
+    
+                let formDni = document.getElementById("formDni");
+                let formNombre = document.getElementById("formNombre");
+
+                if (id === "formDni") {
+                    formDni.style.display = "block";
+                    formNombre.style.display = "none";
+                }
+
+                if (id === "formNombre") {
+                    formNombre.style.display = "block";
+                    formDni.style.display = "none";
+                }
+            }
+
+            function devolverTurnoPorDni(dni){ // TODO: No se si va a ser asi el tema, pero empece a hacerlo y me di cuenta que aun no tenia nisiquiera hehco el modelo de turnos asiq lo dejo asi por si sirve despues.
+                fetch('/turnos/${dni}')
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('Pacientes:', data);
+                    })
+                    .catch(err => {
+                        console.error('Error al traer pacientes:', err);
+                    }
+                );
+            }

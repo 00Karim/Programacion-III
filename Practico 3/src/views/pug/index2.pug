@@ -1,16 +1,46 @@
 doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Document
-  link(rel='stylesheet' href='/css/index2.css')
-.container-login
-  h1 Ingresar
-  .container-campos-login
-    .container-campo-login
-      input(type='text' placeholder='Usuario')
-    .container-campo-login
-      input(type='text' placeholder='Constrasena')
-    .container-boton-enviar
-      button Enviar
-  #color-palette
+html(lang="es")
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Document
+        link(rel='stylesheet' href='/css/index2.css')
+    body
+        .container-login
+            h1 Ingresar
+            .container-campos-login
+                .container-campo-login
+                    input(type='text' placeholder='Usuario' id='usuario')
+                .container-campo-login
+                    input(type='text' placeholder='Constrasena' id='contrasenia')
+                .container-boton-enviar
+                    button(onclick="chequearCredenciales()") Enviar
+        #color-palette
+
+        script.
+
+            async function chequearCredenciales(){
+                const usuario = document.getElementById('usuario').value
+                const contrasenia = document.getElementById('contrasenia').value
+
+                const respuesta = await fetch('/login', {  // Ajustá si tu ruta es distinta
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuario, contrasenia })
+                });
+
+                console.log("ESTA ES LA RESPUESTA: ", respuesta)
+                const data = await respuesta.json();
+                if (respuesta.ok) {
+                    console.log("Se creo el token:", data.token)
+                    localStorage.setItem('token', data.token)
+                    location.href = '/login/usuario'
+                } else {
+                alert("Credenciales incorrectas: " + data.message)
+            }
+            }
+
+
+  

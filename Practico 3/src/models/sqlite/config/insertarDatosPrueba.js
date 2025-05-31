@@ -1,5 +1,6 @@
 const { Paciente } = require('./../entities/paciente.entity.js')
 const { Turno } = require('./../entities/turno.entity.js')
+const { CredencialesEmpleado } = require('./../entities/empleadoCredenciales.entity.js')
 const { connectDB } = require('./db.js');
 
 const cargarDatos = async () => {
@@ -50,8 +51,26 @@ const cargarDatos = async () => {
         dni: '87654321',
         doctor: 'Dr. Suárez'
     }]);
+    await CredencialesEmpleado.bulkCreate([
+      {
+        usuario: 'jlopez',
+        contrasenia: 'clave1234'
+      },
+      {
+        usuario: 'mgarcia',
+        contrasenia: 'pass2025'
+      },
+      {
+        usuario: 'arodriguez',
+        contrasenia: 'segura789'
+      },
+      {
+        usuario: 'cfernandez',
+        contrasenia: 'admin987'
+      }
+    ]);
     
-    console.log('Pacientes insertados correctamente.');
+    console.log('Datos insertados correctamente.');
   } catch (error) {
     console.error('Error insertando pacientes:', error);
   }
