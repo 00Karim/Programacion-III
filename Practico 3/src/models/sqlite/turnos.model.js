@@ -16,6 +16,19 @@ class TurnosModel {
                 throw error;
             }
         };
+
+        encontrarPorId = async (id) => {
+            try {
+                const turno = await Turno.findOne({
+                where: { id: id }
+            });
+            return turno;
+            } 
+            catch (error) {
+                console.log('Error al buscar el turno:', error.message);
+                throw error;
+            }
+        };
         
         borrarTurno = async (id) => {
             await Turno.destroy({

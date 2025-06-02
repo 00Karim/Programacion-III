@@ -1,4 +1,8 @@
 const jwt = require("jsonwebtoken")
+const path = require('path')
+const  dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../../../.env.template') });
+const palabra = process.env.PALABRA_SECRETA // 0. Extraigo la palabar secreta de .env.template
 const { CredencialesEmpleado } = require('../sqlite/entities/empleadoCredenciales.entity');
 
 
@@ -22,7 +26,7 @@ class LoginModel{
 
             const token = jwt.sign(
                 payload,
-                "palabraSecreta", // TODO: Remplazar ese string por la variable palabra secreta en .env
+                palabra, 
                 {
                     expiresIn: "24h",
                 }

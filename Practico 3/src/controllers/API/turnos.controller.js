@@ -2,8 +2,18 @@ const turnosModel = require('./../../models/sqlite/turnos.model.js')
 
 class turnosController {
     async buscarPorDni(req, res){
+
         const dni = req.params.dni
         const turno = await turnosModel.encontrarPorDni(dni);
+        if (!turno) {
+            return res.status(404).json({ error: 'Turno no encontrado' });
+        }
+        res.status(200).json(turno);
+    }
+
+    async buscarPorId(req, res){
+        const id = req.params.id
+        const turno = await turnosModel.encontrarPorId(id);
         if (!turno) {
             return res.status(404).json({ error: 'Turno no encontrado' });
         }

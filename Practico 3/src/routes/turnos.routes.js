@@ -5,6 +5,7 @@ const { verifyTokenMiddleware } = require('../middleware/loginMiddleware.js')
 
 
 rutaTurnos.get('/:dni', turnosController.buscarPorDni);
+rutaTurnos.get('/id/:id', turnosController.buscarPorId)
 rutaTurnos.delete('/:id', verifyTokenMiddleware, turnosController.eliminarTurno)
 rutaTurnos.post('/', verifyTokenMiddleware, turnosController.agregarTurno)
 

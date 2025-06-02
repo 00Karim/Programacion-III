@@ -47,7 +47,7 @@ html(lang="es")
 
                 div.container-buscador-formularios
                     //- formulario para buscar turnos por dni
-                    form#formDniPacientes(method="GET" style="display:block")
+                    form#formDniPacientes(method="GET" style="display:flex")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
                         button(type="button" onclick="devolverTurnoPorDni()") Buscar
@@ -89,22 +89,22 @@ html(lang="es")
 
                 div.container-buscador-formularios
                     //- formulario para buscar turnos por dni
-                    form#formDniTurnos(method="GET" style="display:block")
+                    form#formDniTurnos(method="GET" style="display:flex")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
                         button(type="button" onclick="devolverTurnoPorDni()") Buscar
 
                     //- formulario para buscar turnos por nombre
                     form#formIdTurnos(method="GET" style="display:none")
-                        label(for="nombre") Id:
+                        label(for="nombre") ID:
                         input(type="text" name="id" id="id" required)
-                        button(type="button") Buscar
+                        button(type="button" onclick="devolverTurnoPorId()") Buscar
 
                     //- formulario para borrar turnos por id
                     form#formBorrarTurnos(method="DELETE" style="display:none")
                         label(for="id") ID:
                         input(type="text" name="id" id="id" required)
-                        button(type="button") Borrar
+                        button(type="button" onclick="borrarTurnoPorId()") Borrar
 
                     //- formulario para agregar turnos por id
                     form#formAgregarTurnos(method="POST" style="display:none")
@@ -114,7 +114,7 @@ html(lang="es")
                         input(type="text" name="fecha" id="fecha" required)
                         label(for="doctor") Doctor:
                         input(type="text" name="doctor" id="doctor" required)
-                        button(type="button") Agregar
+                        button(type="button" onclick="agregarTurno()") Agregar
             
             div.container-tablas
                 div.container-tabla
@@ -138,12 +138,14 @@ html(lang="es")
                         table
                             thead
                                 tr
+                                    th ID
                                     th Nombre
                                     th Doctor
                                     th Fecha
                             tbody
                                 each turno in turnos
                                     tr
+                                        td= turno.id
                                         td= turno.nombre
                                         td= turno.doctor
                                         td= turno.fecha
@@ -193,19 +195,95 @@ html(lang="es")
             }
 
             // FUNCIONES CRUD DE TURNO
-            function devolverTurnoPorDni(dni){ // TODO: No se si va a ser asi el tema, pero empece a hacerlo y me di cuenta que aun no tenia nisiquiera hehco el modelo de turnos asiq lo dejo asi por si sirve despues.
-                fetch('/turnos/${dni}')
-                    .then(res => res.json())
+            function devolverTurnoPorDni(){ 
+                const dni = document.querySelector("#formDniTurnos input").value
+                fetch(`/turnos/${dni}`)
+                    .then(response => response.json())
                     .then(data => {
-                        console.log('Pacientes:', data);
+                        console.log("Turnos encontrados:", data);
+                        const tbody = document.querySelectorAll('div.container-tabla table tbody')[1];
+
+                        tbody.innerHTML = '';
+
+                        data.forEach(turno => {
+                            const tr = document.createElement('tr');
+
+                            tr.innerHTML = `
+                                <td>${turno.id}</td>
+                                <td>${turno.dni}</td>
+                                <td>${turno.doctor}</td>
+                                <td>${turno.fecha}</td>
+                            `;
+
+                            tbody.appendChild(tr);
+                        });
                     })
-                    .catch(err => {
-                        console.error('Error al traer pacientes:', err);
-                    }
-                );
+                    .catch(error => console.error("Error:", error));
             }
 
-            function borrarTurnoPorDni(dni){
+            function devolverTurnoPorId(){ 
+                const id = document.querySelector("#formIdTurnos input").value
+                fetch(`/turnos/id/${id}`)
+                    .then(response => response.json())
+                    .then(turno => {
+                        console.log("Turno encontrado:", turno);
+                        const tbody = document.querySelectorAll('div.container-tabla table tbody')[1];
 
+                        tbody.innerHTML = '';
+
+                        const tr = document.createElement('tr');
+
+                        tr.innerHTML = `
+                            <td>${turno.id}</td>
+                            <td>${turno.dni}</td>
+                            <td>${turno.doctor}</td>
+                            <td>${turno.fecha}</td>
+                        `;
+
+                        tbody.appendChild(tr);
+                        
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function borrarTurnoPorId(){ 
+                const id = document.querySelector("#formIdTurnos input").value 
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch(`/turnos/${id}`, {
+                    method: "DELETE",
+                    headers: { 'token': `${token}` }
+                })
+                    .then(turno => {
+                        console.log("Turno eliminado:", turno);
+                        alert("Turno borrado")
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function agregarTurno(){ 
+                const dniA = document.querySelector("#formAgregarTurnos #dni").value 
+                const fechaA = document.querySelector("#formAgregarTurnos #fecha").value 
+                const doctorA = document.querySelector("#formAgregarTurnos #doctor").value 
+                console.log("ESTA ES LA FECHA: ", fechaA)
+                console.log("ESTA ES LA DOCTOR: ", doctorA)
+                console.log("ESTA ES LA DNI: ", dniA)
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch(`/turnos`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        fecha: fechaA, 
+                        dni: dniA, 
+                        doctor: doctorA
+                    }),
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
+                    }
+                })
+                    .then(turno => {
+                        console.log("Turno agregado:", turno);
+                        alert("Turno agregado")
+                    })
+                    .catch(error => console.error("Error:", error));
             }
             

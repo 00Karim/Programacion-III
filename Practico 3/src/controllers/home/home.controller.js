@@ -5,7 +5,7 @@ const home = async (req, res) => {
         message: 'Buscador de turnos' ,
         showFeatures: true,
         features: [
-            'Busca tus turnos por dni o por nombre' ,
+            'Busca tus turnos por dni' ,
             'Mira la hora de tu consulta',
             'Mira que doctor te va a atender'
         ]
