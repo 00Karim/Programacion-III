@@ -25,8 +25,6 @@ html(lang="es")
                         div 
                             button(onclick="mostrarFormulario('formDni')") Buscar por dni 
                         div 
-                            button(onclick="mostrarFormulario('formNombre')") Buscar por nombre 
-                        div 
                             a(href="/login")
                                 button(onclick="") Estoy registrado
                     div.container-buscador-formularios
@@ -35,13 +33,6 @@ html(lang="es")
                             label(for="dni") DNI:
                             input(type="text" name="dni" id="dni" required)
                             button(type="submit" onclick="devolverTurnoPorDni()") Buscar
-
-                        //- formulario para buscar turnos por Nombre
-                        form#formNombre(action="/buscar/nombre" method="GET" style="display:none")
-                            label(for="nombre") Nombre:
-                            input(type="text" name="nombre" id="nombre" required)
-                            button(type="submit") Buscar
-
             div.container-tabla
                 if turnos.length
                     table
