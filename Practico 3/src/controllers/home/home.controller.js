@@ -1,7 +1,6 @@
 const home = async (req, res) => {
-    const turnos = [{nombre: "Juan Pérez", doctor: "Dra. González", fecha: "08/06/2025"}]
+    turnos = []
     res.render('index', { 
-        turnos,
         title: 'Buscador de turnos',
         message: 'Buscador de turnos' ,
         showFeatures: true,

@@ -32,23 +32,20 @@ html(lang="es")
                         form#formDni(action="/buscar/dni" method="GET" style="display:block")
                             label(for="dni") DNI:
                             input(type="text" name="dni" id="dni" required)
-                            button(type="submit" onclick="devolverTurnoPorDni()") Buscar
+                            button(type="button" onclick="devolverTurnoPorDni()") Buscar
             div.container-tabla
-                if turnos.length
-                    table
-                        thead
+                table
+                    thead
+                        tr
+                            th DNI
+                            th Doctor
+                            th Fecha
+                    tbody
+                        each turno in turnos
                             tr
-                                th Nombre
-                                th Doctor
-                                th Fecha
-                        tbody
-                            each turno in turnos
-                                tr
-                                    td= turno.nombre
-                                    td= turno.doctor
-                                    td= turno.fecha
-                else
-                    p No hay turnos disponibles.
+                                td= turno.dni
+                                td= turno.doctor
+                                td= turno.fecha
         footer
             p © #{new Date().getFullYear()} Buscador de turnos  
             //-// TODO: Poner en la posicion correcta el footer
@@ -70,15 +67,29 @@ html(lang="es")
                 }
             }
 
-            function devolverTurnoPorDni(dni){ // TODO: No se si va a ser asi el tema, pero empece a hacerlo y me di cuenta que aun no tenia nisiquiera hehco el modelo de turnos asiq lo dejo asi por si sirve despues.
-                fetch('/turnos/${dni}')
-                    .then(res => res.json())
+            function devolverTurnoPorDni(){
+                // TODO: No se si va a ser asi el tema, pero empece a hacerlo y me di cuenta que aun no tenia nisiquiera hehco el modelo de turnos asiq lo dejo asi por si sirve despues.
+                const dni = document.getElementById("dni").value
+                fetch(`/turnos/${dni}`)
+                    .then(response => response.json())
                     .then(data => {
-                        console.log('Pacientes:', data);
+                        console.log("Turnos encontrados:", data);
+                        const tbody = document.querySelector('div.container-tabla table tbody');
+
+                        tbody.innerHTML = '';
+
+                        data.forEach(turno => {
+                            const tr = document.createElement('tr');
+
+                            tr.innerHTML = `
+                                <td>${turno.dni}</td>
+                                <td>${turno.doctor}</td>
+                                <td>${turno.fecha}</td>
+                            `;
+
+                            tbody.appendChild(tr);
+                        });
                     })
-                    .catch(err => {
-                        console.error('Error al traer pacientes:', err);
-                    }
-                );
+                    .catch(error => console.error("Error:", error));
             }
             

@@ -1,4 +1,9 @@
 const jwt = require("jsonwebtoken");
+const path = require('path')
+const  dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../../.env.template') });
+const palabra = process.env.PALABRA_SECRETA // 0. Extraigo la palabar secreta de .env.template
+// console.log(palabra);
 
 const verifyTokenMiddleware = (req, res, next) => {
   const authHeader = req.header('authorization');  // 1. Busca el token en el header
@@ -9,7 +14,7 @@ const verifyTokenMiddleware = (req, res, next) => {
   const token = authHeader;
 
   try {
-    const decoded = jwt.verify(token, "palabraSecreta"); // 3. Verifica que el token sea válido
+    const decoded = jwt.verify(token, palabra); // 3. Verifica que el token sea válido
     req.user = decoded;  // 4. Guarda la info del usuario en el objeto `req` para usar después
     next(); // 5. Llama al siguiente middleware o controller
   } catch (error) {

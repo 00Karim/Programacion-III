@@ -6,7 +6,7 @@ class TurnosModel {
                 
         encontrarPorDni = async (dni) => {
             try {
-                const turno = await Turno.findOne({
+                const turno = await Turno.findAll({
                 where: { dni: dni }
             });
             return turno;

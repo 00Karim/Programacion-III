@@ -50,19 +50,19 @@ html(lang="es")
                     form#formDniPacientes(method="GET" style="display:block")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
-                        button(type="submit" onclick="devolverTurnoPorDni()") Buscar
+                        button(type="button" onclick="devolverTurnoPorDni()") Buscar
 
                     //- formulario para buscar turnos por nombre
                     form#formNombrePacientes(method="GET" style="display:none")
                         label(for="nombre") Nombre:
                         input(type="text" name="nombre" id="nombre" required)
-                        button(type="submit") Buscar
+                        button(type="button") Buscar
                     
                     //- formulario para borrar pacientes por dni
                     form#formBorrarPacientes(method="DELETE" style="display:none")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
-                        button(type="submit") Borrar
+                        button(type="button") Borrar
 
                     //- formulario para modificar pacientes por dni
                     form#formModificarPacientes(method="UPDATE" style="display:none")
@@ -72,7 +72,7 @@ html(lang="es")
                         input(type="text" name="dni" id="nombre" required)
                         label(for="email") Nuevo email:
                         input(type="text" name="dni" id="email" required)
-                        button(type="submit") Modificar
+                        button(type="button") Modificar
 
                     //- formulario para agregar pacientes por dni
                     form#formAgregarPacientes(method="POST" style="display:none")
@@ -82,7 +82,7 @@ html(lang="es")
                         input(type="text" name="dni" id="nombre" required)
                         label(for="email") Email:
                         input(type="text" name="dni" id="email" required)
-                        button(type="submit") Agregar
+                        button(type="button") Agregar
                             
                 div.titulo-buscador-formularios 
                     h1 Turnos
@@ -92,19 +92,19 @@ html(lang="es")
                     form#formDniTurnos(method="GET" style="display:block")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
-                        button(type="submit" onclick="devolverTurnoPorDni()") Buscar
+                        button(type="button" onclick="devolverTurnoPorDni()") Buscar
 
                     //- formulario para buscar turnos por nombre
                     form#formIdTurnos(method="GET" style="display:none")
                         label(for="nombre") Id:
                         input(type="text" name="id" id="id" required)
-                        button(type="submit") Buscar
+                        button(type="button") Buscar
 
                     //- formulario para borrar turnos por id
                     form#formBorrarTurnos(method="DELETE" style="display:none")
                         label(for="id") ID:
                         input(type="text" name="id" id="id" required)
-                        button(type="submit") Borrar
+                        button(type="button") Borrar
 
                     //- formulario para agregar turnos por id
                     form#formAgregarTurnos(method="POST" style="display:none")
@@ -114,7 +114,7 @@ html(lang="es")
                         input(type="text" name="fecha" id="fecha" required)
                         label(for="doctor") Doctor:
                         input(type="text" name="doctor" id="doctor" required)
-                        button(type="submit") Agregar
+                        button(type="button") Agregar
             
             div.container-tablas
                 div.container-tabla
