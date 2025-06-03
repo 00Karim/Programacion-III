@@ -4,9 +4,6 @@ const rutaHome = Router();
 
 rutaHome.get('/', home);
 
-
-//Otras rutas CRUD
-
 module.exports = rutaHome;
 
 

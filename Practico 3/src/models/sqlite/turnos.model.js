@@ -3,6 +3,17 @@ const { Turno } = require('../sqlite/entities/turno.entity.js');
 // SE CONTROLA SI EXISTE UN PACIENTE CON UN DNI EN EL CONTROLADOR, ACA NO
 
 class TurnosModel {
+
+        devolverTodosLosTurnos = async () => {
+            try {
+                const turno = await Turno.findAll();
+            return turno;
+            } 
+            catch (error) {
+                console.log('Error al buscar los turnos:', error.message);
+                throw error;
+            }
+        }
                 
         encontrarPorDni = async (dni) => {
             try {
@@ -34,7 +45,7 @@ class TurnosModel {
             await Turno.destroy({
                 where: { id: id }
             });
-        }; // TODO: Hacer el TRY CATCH
+        }; 
         
         crearTurno = async (fecha, dni, doctor) => {
             try {

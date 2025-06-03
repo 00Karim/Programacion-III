@@ -13,7 +13,7 @@ const Turno = sequelize.define('Turno', {
   },
   dni: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // TODO: Hacer que el dni sea una foreign key que apunte al paciente con el dni correspondiente
   },
   doctor: {
     type: DataTypes.STRING,

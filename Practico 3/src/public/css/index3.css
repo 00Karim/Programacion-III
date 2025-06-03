@@ -5,8 +5,9 @@ body{
     align-items: center;
     flex-direction: column;
     background-size: cover;
-    background-image: url(/img/fondoHome.jpg);
-}
+    background-image: url(/img/fondoHome.jpg); /* TODO: Habria que hacer que este fondo sea diferente al de index1 */
+}                                              /*Fijarse,  con el filtro en google, que la imagen sea tamanio grande asi se ve de buena calidad*/
+
 
 .estructura-fila{
     display: flex;

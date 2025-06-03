@@ -18,7 +18,6 @@ html(lang="es")
                     else
                         p No hay características disponibles.
                     
-                //- Esto es un comentario (no se renderiza en el HTML)
                 div.container-buscador 
                     h1 Buscar turnos
                     div.container-buscador-botones
@@ -33,6 +32,7 @@ html(lang="es")
                             label(for="dni") DNI:
                             input(type="text" name="dni" id="dni" required)
                             button(type="button" onclick="devolverTurnoPorDni()") Buscar
+            //- // TODO: HACER EL CSS DE LA TABLA,  esto tambien hay que hacerlo en las tablas de index3.pug
             div.container-tabla
                 table
                     thead
@@ -68,7 +68,6 @@ html(lang="es")
             }
 
             function devolverTurnoPorDni(){
-                // TODO: No se si va a ser asi el tema, pero empece a hacerlo y me di cuenta que aun no tenia nisiquiera hehco el modelo de turnos asiq lo dejo asi por si sirve despues.
                 const dni = document.getElementById("dni").value
                 fetch(`/turnos/${dni}`)
                     .then(response => response.json())

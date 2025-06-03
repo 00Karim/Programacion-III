@@ -3,9 +3,11 @@ const pacientesModel = require('./../../models/sqlite/paciente.model.js')
 class PacientesController {
 
     async renderizar(req, res){
-        const turnos = [{nombre: "Juan Pérez", doctor: "Dra. González", fecha: "08/06/2025"}] // TODO: Esto despues va a ser inncesario ya que se van a mostrar los turnos solo cuando el usuario lo pida, esto es solo para
+        const turnos = [{nombre: "Juan Pérez", doctor: "Dra. González", fecha: "08/06/2025"}]
+        const pacientes = [{nombre: "Juan Pérez", dni: "16789867", email: "prueba@mail.com"}] // TODO: Esto despues va a ser inncesario ya que se van a mostrar los turnos solo cuando el usuario lo pida, esto es solo para ver como se ve la tabla, despues hay que borrarlo
         res.render('index3', {
             turnos,
+            pacientes,
             title: 'Buscador de turnos',
             message: 'Buscador de turnos' ,
             showFeatures: true,
@@ -50,9 +52,10 @@ class PacientesController {
         pacientesModel.crearPaciente(dni, nombre, email)
         res.status(201).json({message:"Paciente creado correctamente"})
     } // TODO: Try catch para ver si existe el dni (y por si hay error del servidor tambien creo)
+    // TODO: El TODO: de mas arriba va en relacion con uno que deje en index3.pug que dice que la app crashea cuando se ingresa un dni que ya existe
 
-    actualizarMailONombre(req, res) { // Solo se cambian los atributos si se encuentran dentro del body de la request
-        const {nuevoNombre = null, nuevoEmail = null} = req.body
+    actualizarMailONombre(req, res) { // Solo se cambian los atributos si se encuentran dentro del body de la request 
+        const {nuevoNombre = null, nuevoEmail = null} = req.body 
         const dni = req.params.dni
         if(nuevoNombre){
             pacientesModel.actualizarNombre(dni, nuevoNombre)

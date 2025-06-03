@@ -13,7 +13,7 @@ html(lang="es")
                         div 
                             button(onclick="mostrarFormularioPacientes('formDniPacientes')") Buscar por dni 
                         div 
-                            button(onclick="mostrarFormularioPacientes('formNombrePacientes')") Buscar por nombre
+                            button(onclick="mostrarTodosLosPacientes()") Mostrar todos
                         div 
                             button(onclick="mostrarFormularioPacientes('formBorrarPacientes')") Borrar paciente 
                         div 
@@ -23,13 +23,15 @@ html(lang="es")
                         //- div 
                         //-     a(href="/login")
                         //-         button(onclick="") Estoy registrado                        
-                
+                        //- // TODO: IMPORTANTE - Hay que cambiar los nombres de las clases y los ids de los formularios porque estan re mal hechos y confunden mucho, en algunos casos hasta nisiquiera se usan los ids porque directamente se referencia al input con un querySelector, fijarse 
                     h1 Administrar turnos
                     div.container-buscador-botones
                         div 
                             button(onclick="mostrarFormularioTurnos('formDniTurnos')") Buscar por DNI 
                         div 
                             button(onclick="mostrarFormularioTurnos('formIdTurnos')") Buscar por ID
+                        div 
+                            button(onclick="mostrarTodosLosTurnos()") Mostrar todos
                         div 
                             button(onclick="mostrarFormularioTurnos('formBorrarTurnos')") Borrar turno 
                         //- div POR AHORA NO VOY A GASTAR TIEMPO EN ESCRIBIR ESTA FUNCION
@@ -46,44 +48,37 @@ html(lang="es")
                     h1 Pacientes
 
                 div.container-buscador-formularios
-                    //- formulario para buscar turnos por dni
+                    //- formulario para buscar pacientes por dni
                     form#formDniPacientes(method="GET" style="display:flex")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
-                        button(type="button" onclick="devolverTurnoPorDni()") Buscar
-
-                    //- formulario para buscar turnos por nombre
-                    form#formNombrePacientes(method="GET" style="display:none")
-                        label(for="nombre") Nombre:
-                        input(type="text" name="nombre" id="nombre" required)
-                        button(type="button") Buscar
+                        button(type="button" onclick="devolverPacientePorDni()") Buscar
                     
                     //- formulario para borrar pacientes por dni
                     form#formBorrarPacientes(method="DELETE" style="display:none")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
-                        button(type="button") Borrar
+                        button(type="button" onclick="borrarPacientePorDni()") Borrar
 
                     //- formulario para modificar pacientes por dni
-                    form#formModificarPacientes(method="UPDATE" style="display:none")
+                    form#formModificarPacientes(method="PUT" style="display:none")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
                         label(for="nombre") Nuevo nombre:
-                        input(type="text" name="dni" id="nombre" required)
+                        input(type="text" name="nombre" id="nombre" required)
                         label(for="email") Nuevo email:
-                        input(type="text" name="dni" id="email" required)
-                        button(type="button") Modificar
+                        input(type="text" name="email" id="email" required)
+                        button(type="button" onclick="modificarPaciente()") Modificar
 
                     //- formulario para agregar pacientes por dni
                     form#formAgregarPacientes(method="POST" style="display:none")
                         label(for="dni") DNI:
                         input(type="text" name="dni" id="dni" required)
                         label(for="nombre") Nombre:
-                        input(type="text" name="dni" id="nombre" required)
+                        input(type="text" name="nombre" id="nombre" required)
                         label(for="email") Email:
-                        input(type="text" name="dni" id="email" required)
-                        button(type="button") Agregar
-                            
+                        input(type="text" name="email" id="email" required)
+                        button(type="button" onclick="agregarPaciente()") Agregar     
                 div.titulo-buscador-formularios 
                     h1 Turnos
 
@@ -118,21 +113,23 @@ html(lang="es")
             
             div.container-tablas
                 div.container-tabla
-                    if turnos.length
+                    if pacientes.length
                         table
                             thead
                                 tr
+                                    th ID
                                     th Nombre
-                                    th Doctor
-                                    th Fecha
+                                    th Email 
+                                    th DNI
                             tbody
-                                each turno in turnos
+                                each paciente in pacientes
                                     tr
-                                        td= turno.nombre
-                                        td= turno.doctor
-                                        td= turno.fecha
+                                        td= paciente.id
+                                        td= paciente.nombre
+                                        td= paciente.email
+                                        td= paciente.dni
                     else
-                        p No hay turnos disponibles.
+                        p No hay pacientes disponibles.
                 div.container-tabla
                     if turnos.length
                         table
@@ -155,6 +152,8 @@ html(lang="es")
         footer
             p © #{new Date().getFullYear()} Buscador de turnos  
             //-// TODO: Poner en la posicion correcta el footer
+            //-// TODO: HAY QUE CHEQUEAR QUE EL INPUT DE TODAS ESTAS OPERACIONES CRUD SEA CORRECTO: (chequear el mail con regex, que el dni tenga 8 digitos, etc)
+            //- // TODO: Hacer que cuando la cantidad de filas mostradas en la tabla sean mas grandes que el contenedor entonces que aparezca una barrita para bajar 
         script.
 
             let formulario_anterior_pacientes = null
@@ -195,7 +194,7 @@ html(lang="es")
             }
 
             // FUNCIONES CRUD DE TURNO
-            function devolverTurnoPorDni(){ 
+            function devolverTurnoPorDni(){ // TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
                 const dni = document.querySelector("#formDniTurnos input").value
                 fetch(`/turnos/${dni}`)
                     .then(response => response.json())
@@ -221,7 +220,7 @@ html(lang="es")
                     .catch(error => console.error("Error:", error));
             }
 
-            function devolverTurnoPorId(){ 
+            function devolverTurnoPorId(){ // TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
                 const id = document.querySelector("#formIdTurnos input").value
                 fetch(`/turnos/id/${id}`)
                     .then(response => response.json())
@@ -245,14 +244,45 @@ html(lang="es")
                     })
                     .catch(error => console.error("Error:", error));
             }
+            function mostrarTodosLosTurnos(){
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch('/turnos/', {
+                    method: "GET",
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Turnos encontrados:", data);
+                        const tbody = document.querySelectorAll('div.container-tabla table tbody')[1];
 
-            function borrarTurnoPorId(){ 
+                        tbody.innerHTML = '';
+
+                        data.forEach(turno => {
+                            const tr = document.createElement('tr');
+
+                            tr.innerHTML = `
+                                <td>${turno.id}</td>
+                                <td>${turno.dni}</td>
+                                <td>${turno.doctor}</td>
+                                <td>${turno.fecha}</td>
+                            `;
+
+                            tbody.appendChild(tr);
+                        });
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function borrarTurnoPorId(){ // TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
                 const id = document.querySelector("#formIdTurnos input").value 
                 const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
                 fetch(`/turnos/${id}`, {
                     method: "DELETE",
                     headers: { 'token': `${token}` }
-                })
+                    })
                     .then(turno => {
                         console.log("Turno eliminado:", turno);
                         alert("Turno borrado")
@@ -264,9 +294,6 @@ html(lang="es")
                 const dniA = document.querySelector("#formAgregarTurnos #dni").value 
                 const fechaA = document.querySelector("#formAgregarTurnos #fecha").value 
                 const doctorA = document.querySelector("#formAgregarTurnos #doctor").value 
-                console.log("ESTA ES LA FECHA: ", fechaA)
-                console.log("ESTA ES LA DOCTOR: ", doctorA)
-                console.log("ESTA ES LA DNI: ", dniA)
                 const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
                 fetch(`/turnos`, {
                     method: "POST",
@@ -279,10 +306,141 @@ html(lang="es")
                         'token': `${token}`,
                         'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
                     }
-                })
+                    })
                     .then(turno => {
                         console.log("Turno agregado:", turno);
                         alert("Turno agregado")
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function devolverPacientePorDni(){// TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
+                const dni = document.querySelector('#formDniPacientes input').value
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch(`/pacientes/${dni}`, {
+                    method: "GET",
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
+                    }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Paciente encontrado:", data);
+                        const tbody = document.querySelectorAll('div.container-tabla table tbody')[0];
+
+                        tbody.innerHTML = '';
+
+                        const tr = document.createElement('tr');
+
+                        tr.innerHTML = `
+                            <td>${data.id}</td>
+                            <td>${data.nombre}</td>
+                            <td>${data.email}</td>
+                            <td>${data.dni}</td>
+                        `;
+
+                        tbody.appendChild(tr);
+                    }) 
+                    .catch(error => console.error("Error:", error)); 
+            }
+
+            function mostrarTodosLosPacientes(){
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch('/pacientes', {
+                    method: "GET",
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Pacientes encontrados:", data);
+                        const tbody = document.querySelectorAll('div.container-tabla table tbody')[0];
+
+                        tbody.innerHTML = '';
+
+                        data.forEach(paciente => {
+                            const tr = document.createElement('tr');
+
+                            tr.innerHTML = `
+                                <td>${paciente.id}</td>
+                                <td>${paciente.nombre}</td>
+                                <td>${paciente.email}</td>
+                                <td>${paciente.dni}</td>
+                            `;
+
+                            tbody.appendChild(tr);
+                        });
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function borrarPacientePorDni(){ // TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
+                const dni = document.querySelector("#formBorrarPacientes input").value 
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                fetch(`/pacientes/${dni}`, {
+                    method: "DELETE",
+                    headers: { 'token': `${token}` }
+                    })
+                    .then(turno => {
+                        console.log("Paciente eliminado:", turno);
+                        alert("Paciente borrado")
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+
+            function modificarPaciente(){ // TODO: Si no se encuentra se muestra un mensaje o algo que diga que no se encontro (Preferiblemente que no sea un alert porque queda feo)
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                const dni = document.querySelector("#formModificarPacientes #dni").value
+                let nuevoNombre = document.querySelector("#formModificarPacientes #nombre").value
+                let nuevoEmail = document.querySelector("#formModificarPacientes #email").value 
+                if (nuevoNombre === ""){
+                    nuevoNombre = null
+                }
+                if(nuevoEmail === ""){
+                    nuevoEmail = null
+                }
+                fetch(`/pacientes/${dni}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        nuevoNombre: nuevoNombre, 
+                        nuevoEmail: nuevoEmail
+                    }),
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' 
+                    }
+                    })
+                    .then(turno => {
+                        console.log("Paciente modificado:", turno);
+                        alert("Paciente modificado")
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
+            // TODO: Cuando se ingresa un dni que ya existe entonces no se agrega el paciente, pero no se muestra nigun mensaje diciendo eso entonces habria que agregar ese mensaje
+            // TODO: En realidad la app crashea asi que habria que evitar eso en el back end, fijense como hacer
+            function agregarPaciente(){
+                const token = localStorage.getItem('token'); // Extraigo el token del localstorage 
+                const dni = document.querySelector("#formAgregarPacientes #dni").value
+                const nombre = document.querySelector("#formAgregarPacientes #nombre").value
+                const email = document.querySelector("#formAgregarPacientes #email").value 
+                fetch(`/pacientes`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        nombre: nombre, 
+                        email: email, 
+                        dni: dni
+                    }),
+                    headers: { 
+                        'token': `${token}`,
+                        'Content-Type': 'application/json' // Sin esto no anda el post porque el server no sabe que va a recibir json en el body :(
+                    }
+                    })
+                    .then(turno => {
+                        console.log("Paciente agregado:", turno);
+                        alert("Paciente agregado")
                     })
                     .catch(error => console.error("Error:", error));
             }

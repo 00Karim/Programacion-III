@@ -8,7 +8,7 @@ class PacientesModel {
         console.log("ENTRE AL GET PACIENTES");
         const pacientes = Paciente.findAll();
 	    return pacientes;
-    } // TODO: No se, fijarse si es necesario agregar un try catch
+    } 
 
     encontrarPorDni = async (dni) => {
         try {
@@ -50,7 +50,7 @@ class PacientesModel {
             console.log('Error al crear paciente:', error.message);
             throw error;
         }
-    };
+    }; 
 
     actualizarNombre = async (dni, nuevoNombre) => {
         try {
@@ -84,6 +84,6 @@ class PacientesModel {
         }
     }
 }
-// TODO: Chequear que el dni no exista y si existe devolver error
+
 
 module.exports = new PacientesModel();
