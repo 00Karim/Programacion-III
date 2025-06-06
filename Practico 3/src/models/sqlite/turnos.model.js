@@ -60,7 +60,23 @@ class TurnosModel {
                 console.log('Error al crear el turno:', error.message);
                 throw error;
             }
-        };         
+        };
+        
+        buscarTurnoPorDoctorYFecha = async (doctor, fecha) => {
+            try {
+                const turno = await Turno.findOne({
+                    where: {
+                        doctor: doctor,
+                        fecha: fecha
+                    }
+                });
+                return turno;
+            } catch (error) {
+                console.log('Error al buscar turno por doctor y fecha:', error.message);
+                throw error;
+            }
+    };
+
 }
 
 module.exports = new TurnosModel();
