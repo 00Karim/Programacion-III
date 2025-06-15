@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.lista-tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.tarjeta {
+  border: 2px solid black;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 220px;
+  background-color: gray;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
