@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: app_database
-      POSTGRES_USER: app_user
+      POSTGRES_USER: app_user # // TODO: habria que cambiar estas credenciales por seguridad, pero dejemoslas asi hasta el dia de entrega creo
       POSTGRES_PASSWORD: app_password
     ports:
       - "5432:5432"

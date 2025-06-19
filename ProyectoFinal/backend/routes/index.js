@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const gastosRoutes = require('./gastos.routes')
 
 // Ruta de prueba
 router.get('/health', (req, res) => {
@@ -22,5 +23,7 @@ router.get('/test', (req, res) => {
     }
   });
 });
+
+router.use('/gastos', gastosRoutes)
 
 module.exports = router;

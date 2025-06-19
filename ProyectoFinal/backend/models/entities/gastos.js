@@ -1,5 +1,5 @@
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('gastos', {
+module.exports = function(sequelize, DataTypes) { // ESto se hizo con el comando sequelize-auto
+  return sequelize.define('gastos', { // Este codigo no crea la tabla, simplemente crea una instancia de la tabla para que podamos referirnos a ella con js desde el backend
     id_gasto: {
       autoIncrement: true,
       type: DataTypes.INTEGER,

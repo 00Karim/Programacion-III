@@ -1,7 +1,7 @@
 // backend/models/index.js
 const { Sequelize } = require('sequelize');
 const config = require('../config/database');
-const gastosModel = require('./gastos')
+const gastosModel = require('./entities/gastos')
 
 const env = process.env.NODE_ENV || 'development';
 const dbConfig = config[env];
