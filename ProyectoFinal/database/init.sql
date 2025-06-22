@@ -64,6 +64,32 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- DEVUELVE GASTOS AGRUPADOS POR CATEGORIA
+-- Notas: SUM() devuelve un BIGINT
+CREATE FUNCTION devolverGastosAgrupadosPorCategoria()
+RETURNS TABLE (categoria VARCHAR, total_gastos BIGINT)
+AS $$
+BEGIN   
+    RETURN QUERY SELECT gastos.categoria, SUM(gastos.cantidad) AS total_gastos FROM gastos
+    GROUP BY gastos.categoria;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE GASTOS AGRUPADOS POR MES EN UN ANIO SELECCIONADO
+-- Notas: SUM() devuelve un BIGINT y tenemos que convertir mes a INTEGER con ::INTEGER porque EXTRACT devuelve un tipo de dato NUMERIC y lo que nosotros retornamos en la function es un INTEGER entonces tenemos que convertirlo para que no de error
+CREATE FUNCTION devolverGastosAgrupadosPorMes(anio_in INTEGER)
+RETURNS TABLE (total_gastos BIGINT, mes INTEGER)
+AS $$
+BEGIN
+    RETURN QUERY SELECT SUM(cantidad) AS total_cantidad, 
+    EXTRACT(MONTH FROM fecha)::INTEGER AS mes 
+    FROM gastos
+    WHERE EXTRACT(YEAR FROM fecha) = anio_in
+    GROUP BY mes
+    ORDER BY mes; 
+END;
+$$ LANGUAGE plpgsql;
+
 -- DEVUELVE GASTOS POR FECHA MAYOR A UNA FECHA INGRESADA
 CREATE FUNCTION devolverGastosPorFechaMayorA(in_fecha DATE)
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE)

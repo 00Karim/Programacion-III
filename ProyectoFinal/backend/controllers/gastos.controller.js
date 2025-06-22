@@ -7,6 +7,17 @@ class GastosController{
         res.status(200).json(await GastosModel.devolverGastos())
     }
 
+    async devolverAgrupadosMes(req, res){
+        console.log("devolverAgrupadosMes - gastos.controller.js")
+        const { anio } = req.params
+        res.status(200).json(await GastosModel.devolverGastosAgrupadosPorMes(anio))
+    }
+
+    async devolverAgrupadosCategoria(req, res){
+        console.log("devolverAgrupadosCategoria - gastos.controller.js");
+        res.status(200).json(await GastosModel.devolverGastosAgrupadosPorCategoria())
+    }
+
     async devolverMayoresA(req, res){
         console.log("devolverMayoresA - gastos.controller.js")
         const { cantidad } = req.params

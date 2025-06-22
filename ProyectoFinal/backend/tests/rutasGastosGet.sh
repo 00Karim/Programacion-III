@@ -13,6 +13,8 @@ while true; do
 ║  4 - Devolver gastos por categoría          ║
 ║  5 - Devolver gastos por fecha mayor a      ║
 ║  6 - Devolver gastos por fecha menor a      ║
+║  7 - Devolver gastos agrupados por mes      ║
+║  8 - Devolver gastos agrupados por categoria║
 ║  0 - Salir                                  ║
 ╚═════════════════════════════════════════════╝
 \e[0m"
@@ -54,6 +56,16 @@ case $eleccion in
         read -r fecha
         echo -e "\e[35m\nTest: Gastos con fecha menor a $fecha\e[0m"
         curl -s "$URL_BASE/fechaMenorA/$fecha" | jq
+        ;;
+    7)
+        echo -ne "Ingresa el anio: "
+        read -r anio
+        echo -e "\e[35m\nTest: Gastos agrupados por meses de un anio especifico\e[0m"
+        curl -s "$URL_BASE/agrupadosPorMes/$anio" | jq
+        ;;
+    8)
+        echo -e "\e[35m\nTest: Gastos agrupados por categorias\e[0m"
+        curl -s "$URL_BASE/agrupadosPorCategoria" | jq
         ;;
     0)
         echo -e "\n\e[33mSaliste del tester\e[0m"
