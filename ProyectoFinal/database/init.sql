@@ -107,3 +107,14 @@ BEGIN
     RETURN QUERY SELECT * FROM gastos WHERE gastos.fecha < in_fecha;
 END;
 $$ LANGUAGE plpgsql;
+
+-- AGREGA UN GASTO CON LOS ATRIBUTOS QUE INGRESE EL USUARIO
+CREATE FUNCTION borrarGasto(in_id INTEGER)
+RETURNS VOID   
+AS $$
+BEGIN
+    DELETE FROM gastos
+    WHERE gastos.id_gasto = in_id;
+END;
+$$ LANGUAGE plpgsql
+

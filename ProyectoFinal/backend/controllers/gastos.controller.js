@@ -1,3 +1,4 @@
+const gastosModel = require('../models/gastos.model')
 const GastosModel = require('../models/gastos.model')
 
 class GastosController{
@@ -48,6 +49,18 @@ class GastosController{
         console.log("devolverFechaMenorA - gastos.controller.js")
         const { fecha } = req.params
         res.status(200).json(await GastosModel.devolverGastosPorFechaMenorA(fecha))
+    }
+
+    async crearGasto(req, res){
+        console.log("crearGasto - gastos.controller.js");
+        const { categoria, cantidad, fecha } = req.body
+        res.status(200).json(await GastosModel.crearGasto(categoria, cantidad, fecha))
+    }
+
+    async borrarGasto(req, res){
+        console.log("borrarGasto - gastos.controller.js");
+        const { id } = req.params
+        res.status(200).json(await gastosModel.borrarGasto(id))
     }
 
 }

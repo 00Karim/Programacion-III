@@ -60,12 +60,14 @@ class GastosModel {
         return gastos[0]; 
     }
 
-    crearGasto = async () => {
-
+    crearGasto = async (categoria, cantidad, fecha) => {
+        console.log("crearGasto - gastos.model.js"); // TODO: Validar el tipo de los parametros aca o en el front o en ambas
+        await sequelize.query(`SELECT agregarUnGasto('${categoria}', ${cantidad}, '${fecha}')`)
     }
 
-    borrarGasto = async () => {
-        
+    borrarGasto = async (id) => {
+        console.log("borrarGasto - gastos.model.js");
+        await sequelize.query(`SELECT borrarGasto(${id})`)
     }
 }
 
