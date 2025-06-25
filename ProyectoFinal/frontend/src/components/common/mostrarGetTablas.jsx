@@ -28,6 +28,9 @@ function MostrarGetTablas({operacionSeleccionada}){
                                     <td>{operacionSeleccionada ? gasto.categoria : "Vacio"}</td>
                                     <td>{operacionSeleccionada ? gasto.cantidad : "Vacio"}</td>
                                     <td>{operacionSeleccionada ? gasto.fecha : "Vacio"}</td>
+                                    <td>
+                                        <button>Borrar</button> {/* TODO: Hay que agregarle la funcionalidad*/}
+                                    </td>
                                 </tr>)
                         }
                     )}
