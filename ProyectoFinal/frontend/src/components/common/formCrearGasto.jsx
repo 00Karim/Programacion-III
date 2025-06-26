@@ -18,7 +18,7 @@ function CrearGastoForm({ agregarABaseDeDatos = null }) {
                     fecha
                 };
             
-                //agregarABaseDeDatos(nuevoGasto);
+                //agregarABaseDeDatos(nuevoGasto); TODO: Aca tenemos que agregar el codigo necesario para agregar el coso ala base de datos, osea con un fetch creo
             
                 setCategoria('');
                 setCantidad('');

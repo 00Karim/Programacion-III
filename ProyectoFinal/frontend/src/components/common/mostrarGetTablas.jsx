@@ -1,4 +1,4 @@
-function MostrarGetTablas({operacionSeleccionada}){
+function MostrarGetTablas({operacionSeleccionada, gastosAPI}){
     
     let gastos = [
         {id_gasto: 1, categoria: 'Servicios', cantidad: 90, fecha: '2025-03-22'}, 

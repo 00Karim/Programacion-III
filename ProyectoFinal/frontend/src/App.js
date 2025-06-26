@@ -11,14 +11,15 @@ function App() {
     const [operacionSeleccionada, setOperacionSeleccionada] = useState("");
     const [elementosOperacionActual, setElementosOperacionActual] = useState([])
     const [crearFormAgregarGasto, setCrearForm] = useState(false)
+    const [datosGastos, setDatosGastos] = useState([])
 
     const botonesFiltros = [
-        { titulo: "Volver", valor: "" },
-        { titulo: "Mostrar gastos", valor: "Todos los gastos" },
-        { titulo: "Filtrar mayores a X", valor: "Gastos mayores a una cantidad" },
-        { titulo: "Filtrar menores a X", valor: "Gastos menores a una cantidad" },
-        { titulo: "Gastos antes de X", valor: "Gastos antes de una fecha" },
-        { titulo: "Gastos después de X", valor: "Gastos después de una fecha" },
+        { titulo: "Volver", valor: ""},
+        { titulo: "Mostrar gastos", valor: "Todos los gastos", route: "/"},
+        { titulo: "Filtrar mayores a X", valor: "Gastos mayores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", inputOnChange: {setDatosGastos}, route: "/mayorA/"},
+        { titulo: "Filtrar menores a X", valor: "Gastos menores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", inputOnChange: {setDatosGastos}, route: "/menorA/" },
+        { titulo: "Gastos antes de X", valor: "Gastos antes de una fecha", inputType: "Date", inputLabel: "Elige una fecha", inputOnChange: {setDatosGastos}, route: "/fechaMayorA/"},
+        { titulo: "Gastos después de X", valor: "Gastos después de una fecha", inputType: "Date", inputLabel: "Elige una fecha", inputOnChange: {setDatosGastos}, route: "/fechaMenorA/"},
     ];
 
     const botonesGraficos = [
