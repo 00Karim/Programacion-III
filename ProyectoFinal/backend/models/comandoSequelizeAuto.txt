@@ -1,0 +1,1 @@
+npx sequelize-auto -h localhost -d app_database -u app_user -x app_password -p 5432 -e postgres -o ./models/entities

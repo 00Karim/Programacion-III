@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('gastos', {
-    id_gasto: {
+  return sequelize.define('ingresos', {
+    id_ingreso: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    categoria: {
+    origen: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
@@ -21,15 +21,15 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'gastos',
+    tableName: 'ingresos',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "gastos_pkey",
+        name: "ingresos_pkey",
         unique: true,
         fields: [
-          { name: "id_gasto" },
+          { name: "id_ingreso" },
         ]
       },
     ]

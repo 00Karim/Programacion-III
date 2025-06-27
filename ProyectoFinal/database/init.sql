@@ -18,6 +18,13 @@ CREATE TABLE IF NOT EXISTS gastos (
     fecha DATE
 );
 
+CREATE TABLE IF NOT EXISTS ingresos (
+    id_ingreso SERIAL PRIMARY KEY,
+    origen VARCHAR(255),
+    cantidad INTEGER,
+    fecha DATE
+);
+
 INSERT INTO gastos (categoria, cantidad, fecha) VALUES
     ('Alimentos', 3200, '2025-06-01'),
     ('Transporte', 1100, '2025-06-02'),
@@ -25,11 +32,19 @@ INSERT INTO gastos (categoria, cantidad, fecha) VALUES
     ('Educación', 4000, '2025-06-04'),
     ('Entretenimiento', 1800, '2025-06-05');
 
+INSERT INTO ingresos (origen, cantidad, fecha) VALUES
+    ('Bitcoin', 200, '2025-07-01'),
+    ('Bitcoin', 100, '2025-04-02'),
+    ('Bitcoin', 800, '2025-04-03'),
+    ('Otros', 10, '2025-05-21'),
+    ('Regalo', 3000, '2025-06-05');
+
 -- Mensaje de confirmación
 SELECT 'Base de datos inicializada correctamente' AS status;
 
--- FUNCTIONS (STORED PROCEDURES en sql normal) 
+-- FUNCTIONS (STORED PROCEDURES en mysql) 
 
+--- INICIO FUNCIONES GASTOS ---
 
 -- Explicacion de la sintaxis para crear una funcion (procedimiento) en postgre
 -- CREATE FUNCTION... De esta manera creas un stored procedure en postgre
@@ -126,5 +141,101 @@ AS $$
         INSERT INTO gastos (categoria, cantidad, fecha) VALUES (in_categoria, in_cantidad, in_fecha);
     END;
 $$ LANGUAGE plpgsql;
+
+--- FIN FUNCIONES GASTOS ---
+
+--- INICIO DE FUNCIONES DE INGRESOS ---
+
+-- DEVUELVE INGRESOS MAYORES A UNA CANTIDAD INGRESADA
+CREATE FUNCTION devolverIngresosMayoresA(cantidad_in INTEGER) 
+RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fech DATE) 
+AS $$ 
+BEGIN
+    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.cantidad > cantidad_in;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS MENORES A UNA CANTIDAD INGRESADA
+CREATE FUNCTION devolverIngresosMenoresA(cantidad_in INTEGER)
+RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.cantidad < cantidad_in;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS POR CATEGORIA
+CREATE FUNCTION devolverIngresosPorOrigen(origen_in VARCHAR)
+RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.origen = origen_in;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS AGRUPADOS POR CATEGORIA
+-- Notas: SUM() devuelve un BIGINT
+CREATE FUNCTION devolverIngresosAgrupadosPorOrigen()
+RETURNS TABLE (origen VARCHAR, total_ingresos BIGINT)
+AS $$
+BEGIN   
+    RETURN QUERY SELECT ingresos.origen, SUM(ingresos.cantidad) AS total_ingresos FROM ingresos
+    GROUP BY ingresos.categoria;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS AGRUPADOS POR MES EN UN ANIO SELECCIONADO
+-- Notas: SUM() devuelve un BIGINT y tenemos que convertir mes a INTEGER con ::INTEGER porque EXTRACT devuelve un tipo de dato NUMERIC y lo que nosotros retornamos en la function es un INTEGER entonces tenemos que convertirlo para que no de error
+CREATE FUNCTION devolverIngresosAgrupadosPorMes(anio_in INTEGER)
+RETURNS TABLE (total_ingresos BIGINT, mes INTEGER)
+AS $$
+BEGIN
+    RETURN QUERY SELECT SUM(cantidad) AS total_cantidad, 
+    EXTRACT(MONTH FROM fecha)::INTEGER AS mes 
+    FROM ingresos
+    WHERE EXTRACT(YEAR FROM fecha) = anio_in
+    GROUP BY mes
+    ORDER BY mes; 
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS POR FECHA MAYOR A UNA FECHA INGRESADA
+CREATE FUNCTION devolverIngresosPorFechaMayorA(in_fecha DATE)
+RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.fecha > in_fecha;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DEVUELVE INGRESOS POR FECHA MENOR A UNA FECHA INGRESADA
+CREATE FUNCTION devolverIngresosPorFechaMenorA(in_fecha DATE)
+RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.fecha < in_fecha;
+END;
+$$ LANGUAGE plpgsql;
+
+-- BORRA UN INGRESO QUE COINCIDA CON EL ID INGRESADO
+CREATE FUNCTION borrarIngreso(in_id INTEGER)
+RETURNS VOID   
+AS $$
+BEGIN
+    DELETE FROM ingresos
+    WHERE ingresos.id_ingreso = in_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- AGREGA UN INGRESO CON LOS ATRIBUTOS QUE INGRESE EL USUARIO
+CREATE FUNCTION agregarUnIngreso(in_origen VARCHAR, in_cantidad INTEGER, in_fecha DATE)
+RETURNS VOID
+AS $$
+    BEGIN
+        INSERT INTO ingresos (origen, cantidad, fecha) VALUES (in_origen, in_cantidad, in_fecha);
+    END;
+$$ LANGUAGE plpgsql;
+
+--- FIN FUNCIONES INGRESOS --- 
 
 
