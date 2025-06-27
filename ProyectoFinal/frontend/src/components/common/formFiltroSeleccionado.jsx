@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
-function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, inputOnChange, route}){
+function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatosGastos}){
+    
+    const [valorInput, setValorInput] = useState("")
     
     const handleSubmit = async(e) => {
         e.preventDefault();
+        try {
+            const respuestaFetch = await fetch(`/api/gastos/${route}/${valorInput}`);
+            const gastos = await respuestaFetch.json();
+            console.log(gastos);
+            setDatosGastos(Array.isArray(gastos) ? gastos : []);
+        } catch (error) {
+            console.error("Error en el fetch:", error);
+        }
+        
     }
 
     return (
+        
         <form onSubmit={
             (e) => {
-                // TODO: Aca adentro tiene que ir el fetch usando el prop route
+                handleSubmit(e)
             }          
         }
         style={{ marginTop: '20px' }}>
@@ -17,7 +29,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, inputOnChange
                 <label>{inputLabel}:</label>
                 <input
                     type={inputType}
-                    onChange={inputOnChange}
+                    onChange={(e) => setValorInput(e.target.value)}
                     placeholder={inputPlaceholder}
                 />
             </div>

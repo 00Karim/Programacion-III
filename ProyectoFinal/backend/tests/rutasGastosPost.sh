@@ -22,7 +22,7 @@ case $eleccion in
         read -p "Ingresa la cantidad: " cantidad
         read -p "Ingresa la fecha: " fecha
 
-        curl -s -X PUT "$URL_BASE/" \
+        curl -s -X POST "$URL_BASE/" \
         -H "Content-Type: application/json" \
         -d "{\"categoria\":\"$categoria\", \"cantidad\":$cantidad, \"fecha\":\"$fecha\"}"
         ;;

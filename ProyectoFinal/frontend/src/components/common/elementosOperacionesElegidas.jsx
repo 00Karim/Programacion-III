@@ -3,9 +3,7 @@ import CrearBotonOperacionSeleccionada from "./botonOperacionSeleccionada"
 import CrearFormFiltro from "./formFiltroSeleccionado"
 
 
-function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada}){
-    {console.log("elementosOperacionesElegidas.jsx")}
-
+function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatosGastos}){
     const [formProps, setFormProps] = useState(false) // creamos este estado para pasar los props de cada boton al componente crearFormFiltro
 
     return (
@@ -24,8 +22,8 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada}){
                     inputType={formProps.inputType}
                     inputLabel={formProps.inputLabel}
                     inputPlaceholder={formProps.inputPlaceholder}
-                    inputOnChange={formProps.inputOnChange}
                     route={formProps.route}
+                    setDatosGastos={setDatosGastos}
                 />
             )}
         </>

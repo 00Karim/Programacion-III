@@ -1,9 +1,17 @@
-function MostrarGetTablas({operacionSeleccionada, gastosAPI}){
+function MostrarGetTablas({operacionSeleccionada, datosGastos, setDatosGastos}){
+
+    const listaActualizada = []
+
+    const handleClickBorrar = async (id) => {
+        await fetch(`/api/gastos/${id}`, {method: 'DELETE'})
+        for(let i = 0; i < datosGastos.length; i++){ // El array datosGastos aun no fue modificado por lo que no se puede ver el cambio en tiempo real...
+            if(datosGastos[i].id_gasto !== id){              // sino que se tiene que esperar a hacer una nueva operacion para que se actualize el array y, 
+                listaActualizada.push(datosGastos[i])// consecuentemente, renderize la tabla. Nosotros queremos que al borrar un gasto entonces
+            }                                        // la fila correspondiente desaparezca al hacerle click al boton. Para eso sirve esta seccion del codigo.
+        }
+        setDatosGastos(listaActualizada)                                            
+    }                                                 
     
-    let gastos = [
-        {id_gasto: 1, categoria: 'Servicios', cantidad: 90, fecha: '2025-03-22'}, 
-        {id_gasto: 2, categoria: 'Farmacia', cantidad: 300, fecha: '2025-03-05'}
-    ]
 
     return ( 
         <>
@@ -19,20 +27,24 @@ function MostrarGetTablas({operacionSeleccionada, gastosAPI}){
                     </tr>
                 </thead>
                 <tbody>
-                    {gastos.map(
-                        (gasto) => 
-                        {
-                            return (
-                                <tr key={gasto.id_gasto}>
-                                    <td>{operacionSeleccionada ? gasto.id_gasto : "Vacio"}</td>
-                                    <td>{operacionSeleccionada ? gasto.categoria : "Vacio"}</td>
-                                    <td>{operacionSeleccionada ? gasto.cantidad : "Vacio"}</td>
-                                    <td>{operacionSeleccionada ? gasto.fecha : "Vacio"}</td>
-                                    <td>
-                                        <button>Borrar</button> {/* TODO: Hay que agregarle la funcionalidad*/}
-                                    </td>
-                                </tr>)
-                        }
+                    {datosGastos.length === 0 ? ( // Si no se ingreso ningun dato en los gets (da error 404 el fetch), entonces se va a mostrar una tabla vacia
+                        <tr>
+                            <td>No existe</td>
+                            <td>No existe</td>
+                            <td>No existe</td>
+                            <td>No existe</td>
+                            <td></td>
+                        </tr>
+                    ) : (
+                        datosGastos.map((gasto) => (
+                        <tr key={gasto.id_gasto}>
+                            <td>{gasto.id_gasto}</td>
+                            <td>{gasto.categoria}</td>
+                            <td>{gasto.cantidad}</td>
+                            <td>{gasto.fecha}</td>
+                            <td><button onClick={() => handleClickBorrar(gasto.id_gasto)}>Borrar</button></td>
+                        </tr>
+                        ))
                     )}
                 </tbody>
             </table>

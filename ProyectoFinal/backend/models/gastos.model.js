@@ -1,5 +1,7 @@
 const { Gastos, sequelize } = require('./index')
 
+// TODO: Poner try catch en todas las funciones
+
 class GastosModel {
 
     devolverGastos = async () => {
@@ -42,7 +44,7 @@ class GastosModel {
         return gastos[0]; 
     }
 
-    devolverGastosPorFechaMayorA = async (fecha) => { // TODO: En el front tenemos que usar toISOString().slice(0, 10) en la fecha para que el sql reciba solo el anio,dia y mes sin el horario
+    devolverGastosPorFechaMayorA = async (fecha) => {
         console.log(`devolverGastosPorFechaMayorA(${fecha}) - gastos.model.js`);
         const gastos = await sequelize.query(
             'SELECT * FROM devolverGastosPorFechaMayorA(:fecha)', // La fecha la recibimos como un string y luego la manejamos correspondientemente en el procedimiento sql
@@ -51,7 +53,7 @@ class GastosModel {
         return gastos[0]; 
     }
 
-    devolverGastosPorFechaMenorA = async (fecha) => { // TODO: En el front tenemos que usar toISOString().slice(0, 10) en la fecha para que el sql reciba solo el anio,dia y mes sin el horario
+    devolverGastosPorFechaMenorA = async (fecha) => { 
         console.log(`devolverGastosPorFechaMenorA(${fecha}) - gastos.model.js`);
         const gastos = await sequelize.query(
             'SELECT * FROM devolverGastosPorFechaMenorA(:fecha)', // La fecha la recibimos como un string y luego la manejamos correspondientemente en el procedimiento sql
@@ -62,7 +64,7 @@ class GastosModel {
 
     crearGasto = async (categoria, cantidad, fecha) => {
         console.log("crearGasto - gastos.model.js"); // TODO: Validar el tipo de los parametros aca o en el front o en ambas
-        await sequelize.query(`SELECT agregarUnGasto('${categoria}', ${cantidad}, '${fecha}')`)
+        await sequelize.query(`SELECT agregarUnGasto('${categoria}', '${cantidad}', '${fecha}')`)
     }
 
     borrarGasto = async (id) => {

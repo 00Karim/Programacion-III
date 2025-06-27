@@ -16,10 +16,10 @@ function App() {
     const botonesFiltros = [
         { titulo: "Volver", valor: ""},
         { titulo: "Mostrar gastos", valor: "Todos los gastos", route: "/"},
-        { titulo: "Filtrar mayores a X", valor: "Gastos mayores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", inputOnChange: {setDatosGastos}, route: "/mayorA/"},
-        { titulo: "Filtrar menores a X", valor: "Gastos menores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", inputOnChange: {setDatosGastos}, route: "/menorA/" },
-        { titulo: "Gastos antes de X", valor: "Gastos antes de una fecha", inputType: "Date", inputLabel: "Elige una fecha", inputOnChange: {setDatosGastos}, route: "/fechaMayorA/"},
-        { titulo: "Gastos después de X", valor: "Gastos después de una fecha", inputType: "Date", inputLabel: "Elige una fecha", inputOnChange: {setDatosGastos}, route: "/fechaMenorA/"},
+        { titulo: "Filtrar mayores a X", valor: "Gastos mayores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", route: "mayorA"},
+        { titulo: "Filtrar menores a X", valor: "Gastos menores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000",  route: "menorA" },
+        { titulo: "Gastos antes de X", valor: "Gastos antes de una fecha", inputType: "Date", inputLabel: "Elige una fecha", route: "fechaMenorA"},
+        { titulo: "Gastos después de X", valor: "Gastos después de una fecha", inputType: "Date", inputLabel: "Elige una fecha", route: "fechaMayorA"},
     ];
 
     const botonesGraficos = [
@@ -39,9 +39,9 @@ function App() {
                 {crearFormAgregarGasto ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                     <CrearGastoForm /> 
                 ) : (
-                    <ElementosOperacionesElegidas botones={elementosOperacionActual} setOperacionSeleccionada={setOperacionSeleccionada}/>
+                    <ElementosOperacionesElegidas botones={elementosOperacionActual} setOperacionSeleccionada={setOperacionSeleccionada} setDatosGastos={setDatosGastos}/>
                 )}
-                <MostrarGetTablas operacionSeleccionada={operacionSeleccionada} />
+                <MostrarGetTablas operacionSeleccionada={operacionSeleccionada} datosGastos={datosGastos} setDatosGastos={setDatosGastos}/>
         </div>
     );
 }

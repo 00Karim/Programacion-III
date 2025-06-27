@@ -1,6 +1,8 @@
 const gastosModel = require('../models/gastos.model')
 const GastosModel = require('../models/gastos.model')
 
+// TODO: Borrar todos los console.log
+
 class GastosController{
     
     async devolverTodos(req, res){

@@ -12,7 +12,7 @@ rutaGastos.get('/porCategoria/:categoria', gastosController.devolverPorCategoria
 rutaGastos.get('/fechaMayorA/:fecha', gastosController.devolverFechaMayorA)
 rutaGastos.get('/fechaMenorA/:fecha', gastosController.devolverFechaMenorA)
 
-rutaGastos.put('/', gastosController.crearGasto)
+rutaGastos.post('/', gastosController.crearGasto)
 
 rutaGastos.delete('/:id', gastosController.borrarGasto)
 module.exports = rutaGastos

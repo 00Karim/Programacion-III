@@ -9,16 +9,11 @@ function CrearGastoForm({ agregarABaseDeDatos = null }) {
 
     return (
         <form onSubmit={
-            (e) => {
+            async (e) => {
                 e.preventDefault()
                 // Con el codigo siguiente guardamos el input del usuario en variables y hacemos el fetch para agregar el gasto a la base de datos
-                const nuevoGasto = {
-                    categoria,
-                    cantidad: parseFloat(cantidad),
-                    fecha
-                };
-            
-                //agregarABaseDeDatos(nuevoGasto); TODO: Aca tenemos que agregar el codigo necesario para agregar el coso ala base de datos, osea con un fetch creo
+                // TODO: IMPORTANTE: VALIDAR INPUT PARA QUE EL USUARIO NO PUEDA INGRESAR UN VALOR VACIO. SI NO HACEMOS ESTO DA ERROR INTERNO DEL SERVIDOR Y SE CAE TODO
+                await fetch('/api/gastos/', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({categoria, cantidad, fecha})})
             
                 setCategoria('');
                 setCantidad('');
@@ -29,7 +24,7 @@ function CrearGastoForm({ agregarABaseDeDatos = null }) {
                 <label>Categoría:</label>
                 <input
                     type="text"
-                    valor={categoria}
+                    value={categoria}
                     onChange={(e) => setCategoria(e.target.value)}
                     placeholder="Ej: Comida"
                 />
@@ -38,7 +33,7 @@ function CrearGastoForm({ agregarABaseDeDatos = null }) {
                 <label>Cantidad:</label>
                 <input
                     type="number"
-                    valor={cantidad}
+                    value={cantidad}
                     onChange={(e) => setCantidad(e.target.value)}
                     placeholder="Ej: 250.00"
                 />
@@ -47,7 +42,7 @@ function CrearGastoForm({ agregarABaseDeDatos = null }) {
                 <label>Fecha:</label>
                 <input
                     type="date"
-                    valor={fecha}
+                    value={fecha}
                     onChange={(e) => setFecha(e.target.value)}
                 />
             </div>

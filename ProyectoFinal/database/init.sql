@@ -108,7 +108,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- AGREGA UN GASTO CON LOS ATRIBUTOS QUE INGRESE EL USUARIO
+-- BORRA UN GASTO QUE COINCIDA CON EL ID INGRESADO
 CREATE FUNCTION borrarGasto(in_id INTEGER)
 RETURNS VOID   
 AS $$
@@ -116,5 +116,15 @@ BEGIN
     DELETE FROM gastos
     WHERE gastos.id_gasto = in_id;
 END;
-$$ LANGUAGE plpgsql
+$$ LANGUAGE plpgsql;
+
+-- AGREGA UN GASTO CON LOS ATRIBUTOS QUE INGRESE EL USUARIO
+CREATE FUNCTION agregarUnGasto(in_categoria VARCHAR, in_cantidad INTEGER, in_fecha DATE)
+RETURNS VOID
+AS $$
+    BEGIN
+        INSERT INTO gastos (categoria, cantidad, fecha) VALUES (in_categoria, in_cantidad, in_fecha);
+    END;
+$$ LANGUAGE plpgsql;
+
 
