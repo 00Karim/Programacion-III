@@ -6,8 +6,8 @@ USER root
 
 # Crear archivo pgpass
 RUN mkdir -p /var/lib/pgadmin && \
-    echo "database:5432:*:app_user:app_password" > /var/lib/pgadmin/pgpass && \
-    chmod 600 /var/lib/pgadmin/pgpass
+    echo "database:5432:*:usuarioPiola:cjaifejuhu39h498e" > /var/lib/pgadmin/pgpass && \
+    chmod 600 /var/lib/pgadmin/pgpass 
 
 # Copiar configuración de servidores
 COPY servers.json /pgadmin4/servers.json
