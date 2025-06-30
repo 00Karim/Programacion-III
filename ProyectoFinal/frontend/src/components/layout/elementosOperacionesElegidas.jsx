@@ -1,9 +1,9 @@
 import { useState } from "react"
-import CrearBotonOperacionSeleccionada from "./botonOperacionSeleccionada"
-import CrearFormFiltro from "./formFiltroSeleccionado"
+import CrearBotonOperacionSeleccionada from "../common/botonOperacionSeleccionada"
+import CrearFormFiltro from "../common/formFiltroSeleccionado"
 
 
-function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatosGastos}){
+function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatos, entidad, setMostrarTabla}){
     const [formProps, setFormProps] = useState(false) // creamos este estado para pasar los props de cada boton al componente crearFormFiltro
 
     return (
@@ -23,7 +23,9 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDa
                     inputLabel={formProps.inputLabel}
                     inputPlaceholder={formProps.inputPlaceholder}
                     route={formProps.route}
-                    setDatosGastos={setDatosGastos}
+                    setDatos={setDatos}
+                    entidad={entidad}
+                    setMostrarTabla={setMostrarTabla}
                 />
             )}
         </>

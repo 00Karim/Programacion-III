@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 
-function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatosGastos}){
+function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla}){
     
     const [valorInput, setValorInput] = useState("")
     
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const respuestaFetch = await fetch(`/api/gastos/${route}/${valorInput}`);
-            const gastos = await respuestaFetch.json();
-            console.log(gastos);
-            setDatosGastos(Array.isArray(gastos) ? gastos : []);
+            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`);
+            const datos = await respuestaFetch.json();
+            console.log(datos);
+            setDatos(Array.isArray(datos) ? datos : []);
         } catch (error) {
             console.error("Error en el fetch:", error);
         }
-        
+        setMostrarTabla(true)
     }
 
     return (
@@ -25,6 +25,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
             }          
         }
         style={{ marginTop: '20px' }}>
+            {inputLabel ?             
             <div>
                 <label>{inputLabel}:</label>
                 <input
@@ -33,7 +34,10 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
                     placeholder={inputPlaceholder}
                 />
             </div>
-            <button type="submit">Ver gastos</button>
+            :
+            <></>
+            }
+            <button type="submit">{`Ver ${entidad}`}</button> 
         </form>
     )
 }
