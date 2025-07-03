@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla}){
+function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla, setMostrarGrafico}){
     
     const [valorInput, setValorInput] = useState("")
     
@@ -14,6 +14,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
         } catch (error) {
             console.error("Error en el fetch:", error);
         }
+        setMostrarGrafico(false)
         setMostrarTabla(true)
     }
 

@@ -22,7 +22,6 @@ class GastosModel {
         return gastos[0];
     }
 
-    // TODO: Terminar de programar las funciones de abajo y hacer las partes correspondientes necesarias en el controlador y las rutas
     devolverGastosMayoresA = async (cantidad) => {
         console.log(`devolverGastosMayoresA(${cantidad}) - gastos.model.js`);
         const gastos = await sequelize.query(`SELECT * FROM devolverGastosMayoresA(${cantidad})`); // Nos aseguramos que cantidad sea un int si o si en el front asi no se pueden hacer inyecciones de sql

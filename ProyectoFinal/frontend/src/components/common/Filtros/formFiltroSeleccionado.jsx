@@ -1,0 +1,94 @@
+import React, { useState } from "react";
+import CrearGraficoGastos from "../Gastos/crearGraficoGastos";
+
+
+function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla, setMostrarGrafico, tituloTabla, esGrafico, setDatosGrafico}){
+    
+    const [valorInput, setValorInput] = useState("")
+    
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        try {
+            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`);
+            const datos = await respuestaFetch.json();
+            console.log(datos);
+            setDatos(Array.isArray(datos) ? datos : []);
+        } catch (error) {
+            console.error("Error en el fetch:", error);
+        }
+        setMostrarGrafico(false) // Se deja de mostrar el grafico y se muestra la tabla
+        setMostrarTabla(true)
+    }
+
+    const handleSubmitGrafico = async(e) => {
+        e.preventDefault();
+        try {
+            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`);
+            const datos = await respuestaFetch.json();
+            console.log("DATOS GRAFICO EN FORMFILTRO: ", datos);
+            setDatosGrafico(Array.isArray(datos) ? datos : [])
+        } catch (error) {
+            console.error("Error en el fetch:", error);
+        }
+        setMostrarGrafico(true) // Se deja de mostrar la tabla y se muestra el grafico. Esto desencadena la creacion de el grafico porque termina siendo true en App.js que es la condicion necesaria para que se renderize el grafico
+        setMostrarTabla(false)
+    }
+
+    if (!esGrafico){
+        return (
+            <>    
+                <h1>{tituloTabla}</h1>
+                <form onSubmit={
+                    (e) => {
+                        handleSubmit(e)
+                    }          
+                }
+                style={{ marginTop: '20px' }}>
+                    {inputLabel ?             
+                    <div>
+                        <label>{inputLabel}:</label>
+                        <input
+                            type={inputType}
+                            onChange={(e) => setValorInput(e.target.value)}
+                            placeholder={inputPlaceholder}
+                        />
+                    </div>
+                    :
+                    <></>
+                    }
+                    <button type="submit">{`Ver ${entidad}`}</button> 
+                </form>
+            </>
+        )
+    }
+    else{
+        return (
+            <>
+                <h1>{tituloTabla}</h1>
+                <form onSubmit={
+                    (e) => {
+                        handleSubmitGrafico(e)
+                    }          
+                }
+                style={{ marginTop: '20px' }}>
+                    {inputLabel ?             
+                    <div>
+                        <label>{inputLabel}:</label>
+                        <input
+                            type={inputType}
+                            onChange={(e) => setValorInput(e.target.value)}
+                            placeholder={inputPlaceholder}
+                        />
+                    </div>
+                    :
+                    <></>
+                    }
+                    <button type="submit">{`Ver ${entidad}`}</button> 
+                </form>
+            </>
+        )
+
+    }
+}
+
+export default CrearFormFiltro;

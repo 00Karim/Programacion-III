@@ -28,7 +28,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev # TODO: Cambiar a "Dockerfile"
+      dockerfile: Dockerfile.dev # TODO: Cambiar a "Dockerfile cuando terminemos la app"
     container_name: app_backend
     restart: unless-stopped
     environment:

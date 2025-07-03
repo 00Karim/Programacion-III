@@ -22,8 +22,6 @@ function MostrarGetTablas({operacionSeleccionada, datos, setDatos, entidad}){
 
     return ( 
         <>
-            <h1>{!operacionSeleccionada && "Esperando operacion..."}</h1> {/*Si no hay una operacion seleccionado entonces se muestra el titulo "Esperando operacion, sino se muestra el titulo de la operacion seleccionada"*/}
-            <h1>{operacionSeleccionada}</h1>
             <table>
                 <thead>
                     <tr>
@@ -39,7 +37,7 @@ function MostrarGetTablas({operacionSeleccionada, datos, setDatos, entidad}){
                             <td>No existe</td>
                             <td>No existe</td>
                             <td>No existe</td>
-                            <td>No existe</td>
+                            <td>No existe</td> 
                             <td></td>
                         </tr>
                     ) : (
