@@ -14,7 +14,7 @@ class IngresosController{
 
     async devolverAgrupadosCategoria(req, res){
         console.log("devolverAgrupadosCategoria - ingresos.controller.js");
-        res.status(200).json(await IngresosModel.devolverIngresosAgrupadosPorCategoria())
+        res.status(200).json(await IngresosModel.devolverIngresosAgrupadosPorOrigen())
     }
 
     async devolverMayoresA(req, res){

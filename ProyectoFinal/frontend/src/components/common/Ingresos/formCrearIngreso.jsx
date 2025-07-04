@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function CrearIngresoForm({ agregarABaseDeDatos = null }) {
+function CrearIngresoForm({ agregarABaseDeDatos = null }) { // TODO: Recibir las props setMostrarTabla y setMostrarGrafico para poder ponerlas ambas en false cuando se renderiza este form, asi no se muestra un grafico o una tabla con el form de crear un ingreso arriba
     console.log("formCrearIngreso.jsx");
     
     const [origen, setOrigen] = useState('');

@@ -6,6 +6,9 @@ import CrearFormFiltro from "../common/Filtros/formFiltroSeleccionado"
 function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatos, entidad, setMostrarTabla, setMostrarGrafico, setDatosGrafico}){
     const [formProps, setFormProps] = useState(false) // creamos este estado para pasar los props de cada boton al componente crearFormFiltro
 
+    setMostrarGrafico(false)
+    setMostrarTabla(false)
+    
     return (
         <>
             {botones.map((boton) => ( 

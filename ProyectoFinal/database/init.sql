@@ -180,7 +180,7 @@ RETURNS TABLE (origen VARCHAR, total_ingresos BIGINT)
 AS $$
 BEGIN   
     RETURN QUERY SELECT ingresos.origen, SUM(ingresos.cantidad) AS total_ingresos FROM ingresos
-    GROUP BY ingresos.categoria;
+    GROUP BY ingresos.origen;
 END;
 $$ LANGUAGE plpgsql;
 

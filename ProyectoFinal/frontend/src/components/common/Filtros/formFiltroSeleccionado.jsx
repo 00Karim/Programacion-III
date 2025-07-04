@@ -33,7 +33,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
         setMostrarGrafico(true) // Se deja de mostrar la tabla y se muestra el grafico. Esto desencadena la creacion de el grafico porque termina siendo true en App.js que es la condicion necesaria para que se renderize el grafico
         setMostrarTabla(false)
     }
-
+    // TODO: IMPORTANTE: VALIDAR EL INPUT DEL USUARIO PARA QUE NO PUEDA INGRESAR VALORES VACIOS O INVALIDOS!!!!!!!!!!!!
     if (!esGrafico){
         return (
             <>    
@@ -46,7 +46,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
                 style={{ marginTop: '20px' }}>
                     {inputLabel ?             
                     <div>
-                        <label>{inputLabel}:</label>
+                        <label>{inputLabel}:</label> 
                         <input
                             type={inputType}
                             onChange={(e) => setValorInput(e.target.value)}

@@ -5,7 +5,7 @@ import CrearGastoForm from './components/common/Gastos/formCrearGasto';
 import CrearGraficoGastos from './components/common/Gastos/crearGraficoGastos';
 
 import CrearIngresosForm from './components/common/Ingresos/formCrearIngreso';
-
+import CrearGraficoIngresos from './components/common/Ingresos/crearGraficoIngresos';
 
 import MostrarGetTablas from './components/common/Filtros/mostrarGetTablas';
 import ElementosOperacionesElegidas from './components/layout/elementosOperacionesElegidas';
@@ -30,6 +30,7 @@ function App() {
     const [mostrarTablaIngresos, setMostrarTablaIngresos] = useState(false)
 
     const[datosGraficasGastos, setDatosGraficasGastos] = useState([])
+    const[datosGraficasIngresos, setDatosGraficasIngresos] = useState([])
 
     const [mostrarGraficaGastos, setMostrarGraficosGastos] = useState(false)
     const [mostrarGraficaIngresos, setMostrarGraficosIngresos] = useState(false)
@@ -58,8 +59,8 @@ function App() {
     ];
 
     const botonesGraficosIngresos = [
-        { titulo: "Ingresos por origen", valor: "Ingresos agrupados por origen", esGrafico: true},
-        { titulo: "Ingresos por mes", valor: "Ingresos agrupados por mes", esGrafico: true}
+        { titulo: "Ingresos por origen", valor: "Ingresos agrupados por origen", route: "agrupadosPorOrigen", esGrafico: true},
+        { titulo: "Ingresos por mes", valor: "Ingresos agrupados por mes", route: "agrupadosPorMes",  inputType: "number", inputLabel: "Ingresa un anio", esGrafico: true}
     ]
 
     return (
@@ -90,10 +91,11 @@ function App() {
                     {crearFormAgregarIngreso ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                         <CrearIngresosForm /> 
                     ) : (
-                        <ElementosOperacionesElegidas botones={elementosOperacionActualIngreso} setOperacionSeleccionada={setOperacionSeleccionadaIngresos} setDatos={setDatosIngresos} entidad={"ingresos"} setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} />
+                        <ElementosOperacionesElegidas botones={elementosOperacionActualIngreso} setOperacionSeleccionada={setOperacionSeleccionadaIngresos} setDatos={setDatosIngresos} entidad={"ingresos"} setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} setDatosGrafico={setDatosGraficasIngresos}/>
                     )}
                     {mostrarTablaIngresos ? <MostrarGetTablas datos={datosIngresos} setDatos={setDatosIngresos} entidad={"ingresos"}/> : <></>} {/* Si no se hace click en un boton para ejecutar alguna operacion para retornar datos entonces el estado va a ser falso y no se va a renderizar la tabla */}
-                    {mostrarGraficaIngresos ? <CrearGraficoGastos setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos}></CrearGraficoGastos> : <></>}
+                    {console.log("DATOS GRAFICO EN APP.JS", datosGraficasIngresos)}
+                    {mostrarGraficaIngresos ? <CrearGraficoIngresos setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} datosGrafico={datosGraficasIngresos}></CrearGraficoIngresos> : <></>}
             </div>
         </>
     );
