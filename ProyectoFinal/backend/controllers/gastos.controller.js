@@ -1,6 +1,6 @@
 const GastosModel = require('../models/gastos.model')
 
-// TODO: Borrar todos los console.log
+// TODO: Borrar todos los console.log, creo. Ns si es necesario, esta bueno tenerlo realmente al menos durante el desarrollo :v
 
 class GastosController{
     

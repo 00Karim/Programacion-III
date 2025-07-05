@@ -1,13 +1,17 @@
-import { useState } from "react"
-import CrearBotonOperacionSeleccionada from "../common/Filtros/botonOperacionSeleccionada"
-import CrearFormFiltro from "../common/Filtros/formFiltroSeleccionado"
+import { useState, useEffect } from "react"
+import CrearBotonOperacionSeleccionada from "../common/FiltrosYGraficos/botonOperacionSeleccionada"
+import CrearFormFiltro from "../common/FiltrosYGraficos/formFiltroSeleccionado"
 
 
 function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatos, entidad, setMostrarTabla, setMostrarGrafico, setDatosGrafico}){
     const [formProps, setFormProps] = useState(false) // creamos este estado para pasar los props de cada boton al componente crearFormFiltro
 
-    setMostrarGrafico(false)
-    setMostrarTabla(false)
+    useEffect(() => { // Siempre que cambie la operacion elegida va a desaparecer la tabla o el grafico que este abajo y los botones de las posibles operaciones de cada seccion (crear, graficos o filtros)
+        if(formProps){
+            setMostrarTabla(false);
+            setMostrarGrafico(false);
+        }
+    }, [formProps]);
     
     return (
         <>
@@ -18,13 +22,12 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDa
                     operacionSeleccionada={boton.valor}
                     setOperacionSeleccionada={setOperacionSeleccionada}
                     mostrarFormulario={() => setFormProps(boton)} // Esta funcion es puesta dentro del onclick del boton creado entonces cuando el usuario lo clickea se le asigna el array de datos del form a la variable formProps por lo que se cumple la condicion de abajo, por lo que se crea y muestra el form
-                    setMostrarTabla={setMostrarTabla} // Usamoas esta variable para hacer desaparecer la tabla cuando se clickea nuevamente un boton para seleccionar una operacion, asi no nos ocurre lo siguiente: se muestra un titulo con una tabla abajo que tiene los datos de una operacion usada antes entonces el titulo y los datos de la tabla no cuadran
-                    setMostrarGrafico={setMostrarGrafico} // Lo mismo de arriba
                     esGrafico={boton.esGrafico}
                 /> 
             ))}
             {formProps && ( // Se cumple la condicion cuando el usuario clickeo el boton creado arriba
                 <CrearFormFiltro 
+                    key={`${entidad}-${formProps.inputLabel}`} // Le damos esta key al form porque sino cuando cambiamos el form a veces se guarda el input al form siguiente y da errores porque hacemos operaciones como mostrar gastos con parametros como el anio y al no existir un path con esas caracteristicas nos da error 404 y se cae todo por alguna razon 
                     inputType={formProps.inputType}
                     inputLabel={formProps.inputLabel}
                     inputPlaceholder={formProps.inputPlaceholder}

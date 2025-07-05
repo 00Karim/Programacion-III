@@ -39,7 +39,6 @@ function CrearGraficoGastos({setMostrarTabla, setMostrarGrafico, datosGrafico}) 
             }
         }
     }
-    // TODO: Falta hacer el grafico para que sea por mes :(
 
     if (datosGrafico[0].categoria){ // Si el objeto tiene un atributo categoria entonces vamos a saber que la operacion seleccionada fue la de agrupar por categoria (sino, es la de agrupar por mes) entonces vamos a tener que devolver el grafico circular correspondiente
         useEffect(() => {

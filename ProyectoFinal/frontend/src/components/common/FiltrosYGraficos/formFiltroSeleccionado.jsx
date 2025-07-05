@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import CrearGraficoGastos from "../Gastos/crearGraficoGastos";
-
 
 function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla, setMostrarGrafico, tituloTabla, esGrafico, setDatosGrafico}){
     

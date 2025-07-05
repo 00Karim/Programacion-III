@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-function CrearIngresoForm({ agregarABaseDeDatos = null }) { // TODO: Recibir las props setMostrarTabla y setMostrarGrafico para poder ponerlas ambas en false cuando se renderiza este form, asi no se muestra un grafico o una tabla con el form de crear un ingreso arriba
+function CrearIngresoForm({ setMostrarTabla, setMostrarGrafico }) { // TODO: Recibir las props setMostrarTabla y setMostrarGrafico para poder ponerlas ambas en false cuando se renderiza este form, asi no se muestra un grafico o una tabla con el form de crear un ingreso arriba
     console.log("formCrearIngreso.jsx");
     
     const [origen, setOrigen] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [fecha, setFecha] = useState('');
+
+    setMostrarTabla(false) // Si se clickea nuevamente o por primera vez la operacion de crear un ingreso entonces se debe dejar de mostrar la tabla o el grafico que este debajo
+    setMostrarGrafico(false)
 
     return (
         <form onSubmit={

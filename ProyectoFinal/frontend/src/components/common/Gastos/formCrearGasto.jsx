@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-function CrearGastoForm({ agregarABaseDeDatos = null }) {
+function CrearGastoForm({ setMostrarTabla, setMostrarGrafico }) {
     console.log("formCrearGasto.jsx");
     
     const [categoria, setCategoria] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [fecha, setFecha] = useState('');
+
+    setMostrarTabla(false) // Si se clickea nuevamente o por primera vez la operacion de crear un ingreso entonces se debe dejar de mostrar la tabla o el grafico que este debajo
+    setMostrarGrafico(false)
 
     return (
         <form onSubmit={

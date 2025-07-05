@@ -7,7 +7,7 @@ import CrearGraficoGastos from './components/common/Gastos/crearGraficoGastos';
 import CrearIngresosForm from './components/common/Ingresos/formCrearIngreso';
 import CrearGraficoIngresos from './components/common/Ingresos/crearGraficoIngresos';
 
-import MostrarGetTablas from './components/common/Filtros/mostrarGetTablas';
+import MostrarGetTablas from './components/common/FiltrosYGraficos/mostrarGetTablas';
 import ElementosOperacionesElegidas from './components/layout/elementosOperacionesElegidas';
 import './App.css';
 
@@ -67,13 +67,13 @@ function App() {
         <>
             <div className="App">
                 <h1>Administrador de gastos</h1>
-                <div>
-                    <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos), setCrearFormGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                    <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos), setCrearFormGastos(false)}}>Graficos</button>
-                    <button onClick={ () => {setCrearFormGastos(true)}}>Crear</button>
+                <div>{/* TODO: Faltaria agregar un codigo que haga que cuando se selecciona un nuevo set de operaciones (Crear, filtros, graficos) entonces el titulo y el boton de submit de el form anterior se desaparezca porque actualmente ocurre que cuando hacemos una operacion y luego cambiamos de set de operaciones, el titulo y el boton submit dela operacion anterior del otro set sigue estando ahi y queda feo :(*/}
+                    <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
+                    <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                    <button onClick={ () => {setCrearFormGastos(true), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Crear</button>
                 </div>
                     {crearFormAgregarGasto ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
-                        <CrearGastoForm /> 
+                        <CrearGastoForm setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos}/> 
                     ) : (
                         <ElementosOperacionesElegidas botones={elementosOperacionActualGastos} setOperacionSeleccionada={setOperacionSeleccionadaGastos} setDatos={setDatosGastos} entidad={"gastos"} setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos} setDatosGrafico={setDatosGraficasGastos}/>
                     )}
@@ -85,11 +85,11 @@ function App() {
                 <h1>Administrador de ingresos</h1>
                 <div>
                     <button onClick={ () => {setElementosOperacionActualIngresos(botonesFiltrosIngresos), setCrearFormIngresos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos), setCrearFormIngresos(false)}}>Graficos</button>
-                    <button onClick={ () => {setCrearFormIngresos(true)}}>Crear</button>
+                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos), setCrearFormIngresos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                    <button onClick={ () => {setCrearFormIngresos(true), setMostrarGraficosIngresos(false), setMostrarTablaIngresos(false)}}>Crear</button>
                 </div>
                     {crearFormAgregarIngreso ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
-                        <CrearIngresosForm /> 
+                        <CrearIngresosForm setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos}/> 
                     ) : (
                         <ElementosOperacionesElegidas botones={elementosOperacionActualIngreso} setOperacionSeleccionada={setOperacionSeleccionadaIngresos} setDatos={setDatosIngresos} entidad={"ingresos"} setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} setDatosGrafico={setDatosGraficasIngresos}/>
                     )}
