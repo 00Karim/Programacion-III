@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize'); // Esto se hizo con el comando sequelize-auto
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ingresos', {
     id_ingreso: {
