@@ -26,17 +26,19 @@ function App() {
     const [crearFormAgregarIngreso, setCrearFormIngresos] = useState(false)
     const [datosIngresos, setDatosIngresos] = useState([])
 
-    const [mostrarTablaGastos, setMostrarTablaGastos] = useState(false)
+    const [mostrarTablaGastos, setMostrarTablaGastos] = useState(false) //  Cuando el usuario elige otra operacion entonces la tabla o el grafico debajo se dejan de mostrar, para eso usamos esta variable de estado
     const [mostrarTablaIngresos, setMostrarTablaIngresos] = useState(false)
 
     const[datosGraficasGastos, setDatosGraficasGastos] = useState([])
     const[datosGraficasIngresos, setDatosGraficasIngresos] = useState([])
 
-    const [mostrarGraficaGastos, setMostrarGraficosGastos] = useState(false)
+    const [mostrarGraficaGastos, setMostrarGraficosGastos] = useState(false) //  Cuando el usuario elige otra operacion entonces la tabla o el grafico debajo se dejan de mostrar, para eso usamos esta variable de estado
     const [mostrarGraficaIngresos, setMostrarGraficosIngresos] = useState(false)
 
+    const [mostrarFormularioGastos, setMostrarFormularioGastos] = useState(false) // Esta variable de estado nos ayuda a decidir si se muestra el formulario de la operacion seleccionada o si se deja de mostrar
+    const [mostrarFormularioIngresos, setMostrarFormularioIngresos] = useState(false)
+
     const botonesFiltrosGastos = [
-        { titulo: "Volver", valor: ""},
         { titulo: "Mostrar gastos", valor: "Todos los gastos", route: "/"},
         { titulo: "Filtrar mayores a X", valor: "Gastos mayores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", route: "mayorA"},
         { titulo: "Filtrar menores a X", valor: "Gastos menores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000",  route: "menorA" },
@@ -50,7 +52,6 @@ function App() {
     ]
 
     const botonesFiltrosIngresos = [
-        { titulo: "Volver", valor: ""},
         { titulo: "Mostrar ingresos", valor: "Todos los ingresos", route: "/"},
         { titulo: "Filtrar mayores a X", valor: "Ingresos mayores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000", route: "mayorA"},
         { titulo: "Filtrar menores a X", valor: "Ingresos menores a una cantidad", inputType: "Number", inputLabel: "Ingresa una cantidad", inputPlaceholder: "Ej: 3000",  route: "menorA" },
@@ -68,14 +69,14 @@ function App() {
             <div className="App">
                 <h1>Administrador de gastos</h1>
                 <div>{/* TODO: Faltaria agregar un codigo que haga que cuando se selecciona un nuevo set de operaciones (Crear, filtros, graficos) entonces el titulo y el boton de submit de el form anterior se desaparezca porque actualmente ocurre que cuando hacemos una operacion y luego cambiamos de set de operaciones, el titulo y el boton submit dela operacion anterior del otro set sigue estando ahi y queda feo :(*/}
-                    <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                    <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                    <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false), setMostrarFormularioGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
+                    <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false), setMostrarFormularioGastos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
                     <button onClick={ () => {setCrearFormGastos(true), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Crear</button>
                 </div>
                     {crearFormAgregarGasto ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                         <CrearGastoForm setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos}/> 
                     ) : (
-                        <ElementosOperacionesElegidas botones={elementosOperacionActualGastos} setOperacionSeleccionada={setOperacionSeleccionadaGastos} setDatos={setDatosGastos} entidad={"gastos"} setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos} setDatosGrafico={setDatosGraficasGastos}/>
+                        <ElementosOperacionesElegidas botones={elementosOperacionActualGastos} setOperacionSeleccionada={setOperacionSeleccionadaGastos} setDatos={setDatosGastos} entidad={"gastos"} setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos} setDatosGrafico={setDatosGraficasGastos} mostrarFormulario={mostrarFormularioGastos} setMostrarFormulario={setMostrarFormularioGastos}/>
                     )}
                     {mostrarTablaGastos ? <MostrarGetTablas datos={datosGastos} setDatos={setDatosGastos} entidad={"gastos"}/> : <></>} {/* Si no se hace click en un boton para ejecutar alguna operacion para retornar datos entonces el estado va a ser falso y no se va a renderizar la tabla */}
                     {console.log("DATOS GRAFICO EN APP.JS", datosGraficasGastos)}
@@ -84,14 +85,14 @@ function App() {
             <div className="App">
                 <h1>Administrador de ingresos</h1>
                 <div>
-                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesFiltrosIngresos), setCrearFormIngresos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos), setCrearFormIngresos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesFiltrosIngresos), setCrearFormIngresos(false), setMostrarGraficosIngresos(false), setMostrarTablaIngresos(false), setMostrarFormularioIngresos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
+                    <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos), setCrearFormIngresos(false), setMostrarGraficosIngresos(false),setMostrarTablaIngresos(false), setMostrarFormularioIngresos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
                     <button onClick={ () => {setCrearFormIngresos(true), setMostrarGraficosIngresos(false), setMostrarTablaIngresos(false)}}>Crear</button>
                 </div>
                     {crearFormAgregarIngreso ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                         <CrearIngresosForm setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos}/> 
                     ) : (
-                        <ElementosOperacionesElegidas botones={elementosOperacionActualIngreso} setOperacionSeleccionada={setOperacionSeleccionadaIngresos} setDatos={setDatosIngresos} entidad={"ingresos"} setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} setDatosGrafico={setDatosGraficasIngresos}/>
+                        <ElementosOperacionesElegidas botones={elementosOperacionActualIngreso} setOperacionSeleccionada={setOperacionSeleccionadaIngresos} setDatos={setDatosIngresos} entidad={"ingresos"} setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} setDatosGrafico={setDatosGraficasIngresos} mostrarFormulario={mostrarFormularioIngresos} setMostrarFormulario={setMostrarFormularioIngresos}/>
                     )}
                     {mostrarTablaIngresos ? <MostrarGetTablas datos={datosIngresos} setDatos={setDatosIngresos} entidad={"ingresos"}/> : <></>} {/* Si no se hace click en un boton para ejecutar alguna operacion para retornar datos entonces el estado va a ser falso y no se va a renderizar la tabla */}
                     {console.log("DATOS GRAFICO EN APP.JS", datosGraficasIngresos)}
