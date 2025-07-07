@@ -1,43 +1,39 @@
 const Sequelize = require('sequelize'); // Esto se hizo con el comando sequelize-auto
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('gastos', {
-    id_gasto: {
+  return sequelize.define('usuarios', {
+    id_usuario: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    id_usuario: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'usuarios', 
-        key: 'id_usuario'  
-      }
+    nombre: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      unique: true
     },
-    categoria: {
+    contrasenia: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    fecha: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    }
   }, {
     sequelize,
-    tableName: 'gastos',
+    tableName: 'usuarios',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "gastos_pkey",
+        name: "usuarios_pkey",
         unique: true,
         fields: [
-          { name: "id_gasto" },
+          { name: "id_usuario" },
+        ]
+      },
+      {
+        name: "usuarios_nombre_key",
+        unique: true,
+        fields: [
+          { name: "nombre" },
         ]
       },
     ]

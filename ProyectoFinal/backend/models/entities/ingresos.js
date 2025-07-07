@@ -7,6 +7,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    id_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'usuarios',
+        references: 'id_usuario'
+      }
+    },
     origen: {
       type: DataTypes.STRING(255),
       allowNull: true
