@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 
-function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla, setMostrarGrafico, tituloTabla, esGrafico, setDatosGrafico}){
+function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDatos, entidad, setMostrarTabla, setMostrarGrafico, tituloTabla, esGrafico, setDatosGrafico, token}){
     
     const [valorInput, setValorInput] = useState("")
     
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`);
+            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`, 
+                {
+                    headers: 
+                        {
+                            'Authorization': `Bearer: ${token}`
+                        }
+                }
+            );
             const datos = await respuestaFetch.json();
             console.log(datos);
             setDatos(Array.isArray(datos) ? datos : []);
@@ -21,7 +28,14 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
     const handleSubmitGrafico = async(e) => {
         e.preventDefault();
         try {
-            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`);
+            const respuestaFetch = await fetch(`/api/${entidad}/${route}/${valorInput}`,
+                {
+                    headers: 
+                        {
+                            'Authorization': `Bearer: ${token}`
+                        }
+                }
+            );
             const datos = await respuestaFetch.json();
             console.log("DATOS GRAFICO EN FORMFILTRO: ", datos);
             setDatosGrafico(Array.isArray(datos) ? datos : [])

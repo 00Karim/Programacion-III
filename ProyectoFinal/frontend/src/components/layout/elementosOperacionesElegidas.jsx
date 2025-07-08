@@ -3,7 +3,7 @@ import CrearBotonOperacionSeleccionada from "../common/FiltrosYGraficos/botonOpe
 import CrearFormFiltro from "../common/FiltrosYGraficos/formFiltroSeleccionado"
 
 
-function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatos, entidad, setMostrarTabla, setMostrarGrafico, setDatosGrafico, mostrarFormulario, setMostrarFormulario}){
+function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDatos, entidad, setMostrarTabla, setMostrarGrafico, setDatosGrafico, mostrarFormulario, setMostrarFormulario, token}){
     const [formProps, setFormProps] = useState(false) // creamos este estado para pasar los props de cada boton al componente crearFormFiltro
 
     useEffect(() => { // Siempre que cambie la operacion elegida va a desaparecer la tabla o el grafico que este abajo y los botones de las posibles operaciones de cada seccion (crear, graficos o filtros)
@@ -39,6 +39,7 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDa
                     tituloTabla={formProps.valor}
                     esGrafico={formProps.esGrafico}
                     setDatosGrafico={setDatosGrafico}
+                    token={token}
                 />
             : 
             <></>

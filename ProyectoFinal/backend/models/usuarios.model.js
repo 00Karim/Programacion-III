@@ -14,7 +14,7 @@ class UsuariosModel {
     generarToken(usuario) {
         const payload = { id_usuario: usuario.id_usuario }; 
         const token = jwt.sign(payload, process.env.JWT_SECRET || 'PALAbrapiola', { expiresIn: '1h' });
-        return token;
+        return [token, usuario.id_usuario]; // tambien devolvemos el id_usuario para no tener que decodificarlo en el front siempre que lo querramos usar para crear una nueva entidad
     }
 
 }

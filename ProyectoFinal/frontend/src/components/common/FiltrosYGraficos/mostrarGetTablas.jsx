@@ -1,10 +1,18 @@
-function MostrarGetTablas({operacionSeleccionada, datos, setDatos, entidad}){
-
+function MostrarGetTablas({operacionSeleccionada, datos, setDatos, entidad, token}){
+    
     const listaActualizada = []
     
     const handleClickBorrar = async (id) => {
-        await fetch(`/api/${entidad}/${id}`, {method: 'DELETE'})
-        for(let i = 0; i < datos.length; i++){ 
+        await fetch(`/api/${entidad}/${id}`,
+            {
+                method: 'DELETE',
+                headers: 
+                    {
+                        'Authorization': `Bearer: ${token}`
+                    } 
+            }
+        )
+        for(let i = 0; i < datos.length; i++){ // modificamos los datos de la variable de estado para que se actualize la tabla en timepo real, sino hacemos esto tendriamos que esperar a que el usuario haga un nuevo get para que se vean reflejados los cambios en la variable de estado
             if (entidad === "ingresos"){
                 if(datos[i].id_ingreso !== id){ 
                     listaActualizada.push(datos[i])

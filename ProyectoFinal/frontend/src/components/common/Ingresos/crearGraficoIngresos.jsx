@@ -14,7 +14,10 @@ function CrearGraficoIngresos({setMostrarTabla, setMostrarGrafico, datosGrafico}
 
     const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] 
     let x = 0 // Esta variable la vamos a usar para ir rotando por la lista de colores asi se van agregando a el grafico circular
-    
+    //TODO: si datosGrafico es una lista vacia entonces tenemos que renderizar un grafico vacio sin datos...
+    //... osea que habria que cubrir todo el codigo de abajo en un if statement para que no se ejecute si no 
+    //... hay datos en el array --> Si ejecutamos el codigo de abajo sin que hayan datos entonces nos da 
+    //...el siguiente error: Cannot read properties of undefined (reading 'origen')
     if (datosGrafico[0].origen){ // Si el objeto tiene un atributo categoria entonces vamos a saber que la operacion seleccionada fue la de agrupar por categoria (sino, es la de agrupar por mes) entonces vamos a tener que guardar los datos que vamos a usar para el grafico correspondiente
         for (let i = 0; i < datosGrafico.length; i++) {
             const dato = datosGrafico[i];
