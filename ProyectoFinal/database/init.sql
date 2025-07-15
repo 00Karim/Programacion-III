@@ -35,24 +35,58 @@ CREATE TABLE IF NOT EXISTS ingresos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
+-- Usuarios para probar la app:
+
 INSERT INTO usuarios (nombre, contrasenia) VALUES
     ('usuario1', 'contrasenia1'),
     ('usuario2', 'contrasenia2'),
     ('usuario3', 'contrasenia3');
 
-INSERT INTO gastos (id_usuario, categoria, cantidad, fecha) VALUES
-    (1, 'Alimentos', 3200, '2025-06-01'),
-    (1, 'Transporte', 1100, '2025-06-02'),
-    (2, 'Servicios', 2300, '2025-06-03'),
-    (2, 'Educación', 4000, '2025-06-04'),
-    (3, 'Entretenimiento', 1800, '2025-06-05');
+--  Datos para probar la app: 
 
-INSERT INTO ingresos (id_usuario, origen, cantidad, fecha) VALUES
-    (1, 'Bitcoin', 200, '2025-07-01'),
-    (1, 'Bitcoin', 100, '2025-04-02'),
-    (1, 'Bitcoin', 800, '2025-04-03'),
-    (3, 'Otros', 10, '2025-05-21'),
-    (2, 'Regalo', 3000, '2025-06-05');
+INSERT INTO gastos (categoria, cantidad, fecha, id_usuario) VALUES
+    ('Comida', 850, '2025-07-10', 1),
+    ('Transporte', 320, '2024-03-08', 2),
+    ('Entretenimiento', 1200, '2023-12-15', 3),
+    ('Alquiler', 18500, '2025-01-01', 1),
+    ('Servicios', 2900, '2024-06-03', 2),
+    ('Educación', 4500, '2023-09-25', 3),
+    ('Salud', 2600, '2025-02-06', 1),
+    ('Comida', 930, '2023-11-11', 2),
+    ('Transporte', 400, '2024-08-19',3),
+    ('Entretenimiento', 1100, '2025-04-20', 1),
+    ('Ropa', 1800, '2023-04-10', 1),
+    ('Hogar', 2400, '2025-06-14', 2),
+    ('Mascotas', 1300, '2024-02-21', 3),
+    ('Comida', 780, '2023-10-01', 1),
+    ('Educación', 5200, '2024-11-15', 2),
+    ('Salud', 3900, '2025-03-09', 3),
+    ('Alquiler', 19000, '2023-01-05', 1),
+    ('Servicios', 3100, '2024-09-12', 2),
+    ('Transporte', 550, '2023-08-18',  3),
+    ('Comida', 1020, '2025-05-07', 1);
+
+INSERT INTO ingresos (cantidad, fecha, origen, id_usuario) VALUES
+    (60000, '2025-07-01', 'Transferencia', 1),
+    (15000, '2024-07-07', 'PayPal', 2),
+    (2500, '2023-07-05', 'MercadoPago', 3),
+    (3000, '2025-12-10', 'Efectivo', 1),
+    (20000, '2023-06-30', 'Transferencia', 2),
+    (62000, '2024-05-01', 'Transferencia', 3),
+    (18000, '2025-03-15', 'Payoneer', 1),
+    (3500, '2024-12-24', 'Efectivo', 2),
+    (1900, '2023-10-10', 'Efectivo', 3),
+    (22000, '2025-01-28', 'Transferencia', 1),
+    (61000, '2023-12-01', 'Transferencia', 2),
+    (4000, '2024-04-05', 'Efectivo', 3),
+    (17000, '2023-09-18', 'PayPal', 1),
+    (2200, '2024-10-20', 'MercadoPago', 2),
+    (5000, '2025-02-14', 'Transferencia', 3),
+    (63000, '2023-03-01', 'Transferencia', 1),
+    (21000, '2024-01-15', 'Transferencia', 2),
+    (15500, '2025-06-09', 'Payoneer', 3),
+    (2700, '2023-05-22', 'Efectivo', 1),
+    (3200, '2024-08-30', 'Efectivo', 2);
 
 
 -- Mensaje de confirmación
@@ -73,7 +107,7 @@ CREATE FUNCTION devolverGastosMayoresA(cantidad_in INTEGER, id_usuario_in INTEGE
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE) 
 AS $$ 
 BEGIN
-    RETURN QUERY SELECT * FROM gastos WHERE gastos.id_usuario = id_usuario_in AND gastos.cantidad > cantidad_in;
+    RETURN QUERY SELECT g.id_gasto, g.categoria, g.cantidad, g.fecha FROM gastos g WHERE g.id_usuario = id_usuario_in AND g.cantidad > cantidad_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -82,7 +116,7 @@ CREATE FUNCTION devolverGastosMenoresA(cantidad_in INTEGER, id_usuario_in INTEGE
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM gastos WHERE gastos.id_usuario = id_usuario_in AND gastos.cantidad < cantidad_in;
+    RETURN QUERY SELECT g.id_gasto, g.categoria, g.cantidad, g.fecha FROM gastos g WHERE g.id_usuario = id_usuario_in AND g.cantidad < cantidad_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -91,7 +125,7 @@ CREATE FUNCTION devolverGastosPorCategoria(categoria_in VARCHAR, id_usuario_in I
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM gastos WHERE gastos.id_usuario = id_usuario_in AND gastos.categoria = categoria_in;
+    RETURN QUERY SELECT g.id_gasto, g.categoria, g.cantidad, g.fecha FROM gastos g WHERE g.id_usuario = id_usuario_in AND g.categoria = categoria_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -125,7 +159,7 @@ CREATE FUNCTION devolverGastosPorFechaMayorA(in_fecha DATE, id_usuario_in INTEGE
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM gastos WHERE gastos.id_usuario = id_usuario_in AND gastos.fecha > in_fecha;
+    RETURN QUERY SELECT g.id_gasto, g.categoria, g.cantidad, g.fecha FROM gastos g WHERE g.id_usuario = id_usuario_in AND g.fecha > in_fecha;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -134,7 +168,7 @@ CREATE FUNCTION devolverGastosPorFechaMenorA(in_fecha DATE, id_usuario_in INTEGE
 RETURNS TABLE (id_gasto INTEGER, categoria VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM gastos WHERE gastos.id_usuario = id_usuario_in AND gastos.fecha < in_fecha;
+    RETURN QUERY SELECT g.id_gasto, g.categoria, g.cantidad, g.fecha FROM gastos g WHERE g.id_usuario = id_usuario_in AND g.fecha < in_fecha;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -166,7 +200,7 @@ CREATE FUNCTION devolverIngresosMayoresA(cantidad_in INTEGER, id_usuario_in INTE
 RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE) 
 AS $$ 
 BEGIN
-    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.id_usuario = id_usuario_in AND ingresos.cantidad > cantidad_in;
+    RETURN QUERY SELECT i.id_ingreso, i.origen, i.cantidad, i.fecha FROM ingresos i WHERE i.id_usuario = id_usuario_in AND i.cantidad > cantidad_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -175,7 +209,7 @@ CREATE FUNCTION devolverIngresosMenoresA(cantidad_in INTEGER, id_usuario_in INTE
 RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.id_usuario = id_usuario_in AND ingresos.cantidad < cantidad_in;
+    RETURN QUERY SELECT i.id_ingreso, i.origen, i.cantidad, i.fecha FROM ingresos i WHERE i.id_usuario = id_usuario_in AND i.cantidad < cantidad_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -184,7 +218,7 @@ CREATE FUNCTION devolverIngresosPorOrigen(origen_in VARCHAR, id_usuario_in INTEG
 RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.id_usuario = id_usuario_in AND ingresos.origen = origen_in;
+    RETURN QUERY SELECT i.id_ingreso, i.origen, i.cantidad, i.fecha FROM ingresos i WHERE i.id_usuario = id_usuario_in AND i.origen = origen_in;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -218,7 +252,7 @@ CREATE FUNCTION devolverIngresosPorFechaMayorA(in_fecha DATE, id_usuario_in INTE
 RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.id_usuario = id_usuario_in AND ingresos.fecha > in_fecha;
+    RETURN QUERY SELECT i.id_ingreso, i.origen, i.cantidad, i.fecha FROM ingresos i WHERE i.id_usuario = id_usuario_in AND i.fecha > in_fecha;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -227,7 +261,7 @@ CREATE FUNCTION devolverIngresosPorFechaMenorA(in_fecha DATE, id_usuario_in INTE
 RETURNS TABLE (id_ingreso INTEGER, origen VARCHAR, cantidad INTEGER, fecha DATE)
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM ingresos WHERE ingresos.id_usuario = id_usuario_in AND ingresos.fecha < in_fecha;
+    RETURN QUERY SELECT i.id_ingreso, i.origen, i.cantidad, i.fecha FROM ingresos i WHERE i.id_usuario = id_usuario_in AND i.fecha < in_fecha;
 END;
 $$ LANGUAGE plpgsql;
 

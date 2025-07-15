@@ -1,103 +1,76 @@
 import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js'; // v2.9.4
+import Chart from 'chart.js';
 
-function CrearGraficoGastos({setMostrarTabla, setMostrarGrafico, datosGrafico}) { // TODO: Recibir las props setMostrarTabla y setMostrarGrafico para poder ponerlas ambas en false cuando se renderiza este form, asi no se muestra un grafico o una tabla con el form de crear un gasto arriba
+function CrearGraficoGastos({ setMostrarTabla, setMostrarGrafico, datosGrafico }) {
     const chartRef = useRef(null);
-    
-    console.log("DATOS EN CREAR GRAFICO: ", datosGrafico);
-    
+    const colores = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#00C49F", "#FF4444", "#0099CC", "#FF66CC"];
+    const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-    const datosLabels = []
-    const datosData = []
-    const datosColores = []
-    const colores = ["#FF6384","#36A2EB","#FFCE56","#4BC0C0","#9966FF","#FF9F40","#00C49F","#FF4444","#0099CC","#FF66CC"]
+    useEffect(() => {
+        if (!datosGrafico || datosGrafico.length === 0) return; // si datos graficos no tiene nada adentro entonces no ejecutamos el codigo de abajo porque todas las lineas en las que se intenta acceder a algun atributo dentro de un elemento en el array datos da error
 
-    const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] 
-    let x = 0 // Esta variable la vamos a usar para ir rotando por la lista de colores asi se van agregando a el grafico circular
-    //TODO: si datosGrafico es una lista vacia entonces tenemos que renderizar un grafico vacio sin datos...
-    //... osea que habria que cubrir todo el codigo de abajo en un if statement para que no se ejecute si no 
-    //... hay datos en el array --> Si ejecutamos el codigo de abajo sin que hayan datos entonces nos da 
-    //...el siguiente error: Cannot read properties of undefined (reading 'categoria')
-    if (datosGrafico[0].categoria){ // Si el objeto tiene un atributo categoria entonces vamos a saber que la operacion seleccionada fue la de agrupar por categoria (sino, es la de agrupar por mes) entonces vamos a tener que guardar los datos que vamos a usar para el grafico correspondiente
+        setMostrarTabla(false);
+        setMostrarGrafico(true);
+
+        const labels = []
+        const data = []
+        const coloresFondo = []
+        let x = 0
+        let posColor = 0
+
+        const esPorCategoria = !!datosGrafico[0].categoria; // esta constante la vamos a usar para poder crear el grafico dinamicamente dependiendo de cual de los dos se piden (por categoria o por mes)
+
         for (let i = 0; i < datosGrafico.length; i++) {
             const dato = datosGrafico[i];
-            datosLabels.push(dato.categoria)
-            datosData.push(parseInt(dato.total_gastos))
-            datosColores.push(colores[x])
-            x++
-            if(x > colores.length){
-                x = 0
+            if (esPorCategoria) {
+                labels.push(dato.categoria);
+            } 
+            else {
+                labels.push(meses[dato.mes]);
+            }
+            data.push(parseFloat(dato.total_gastos));
+            coloresFondo.push(colores[posColor]);
+            posColor += 1;
+            if (posColor > 9){
+                posColor = 0
             }
         }
-    }
-    else{
-        for (let i = 0; i < datosGrafico.length; i++){           
-            const dato = datosGrafico[i]
-            datosLabels.push(meses[datosGrafico[i].mes]) 
-            datosData.push(datosGrafico[i].total_gastos)
-            datosColores.push(colores[x])
-            x++
-            if(x > colores.length){
-                x = 0
-            }
-        }
-    }
 
-    if (datosGrafico[0].categoria){ // Si el objeto tiene un atributo categoria entonces vamos a saber que la operacion seleccionada fue la de agrupar por categoria (sino, es la de agrupar por mes) entonces vamos a tener que devolver el grafico circular correspondiente
-        useEffect(() => {
+        const ctx = chartRef.current.getContext('2d');
 
-            setMostrarTabla(false) // Se deja de mostrar la tabla y se muestra el grafico
-            setMostrarGrafico(true)
-
-            const ctx = chartRef.current.getContext('2d');
-
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: datosLabels,
-                    datasets: [
-                        {
-                            label: 'Gastos por categoría',
-                            data: datosData,
-                            backgroundColor: datosColores,
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                },
-            });
-        }, []);
-    }
-    else{
-        useEffect(() => {
-
-            setMostrarTabla(false) // Se deja de mostrar la tabla y se muestra el grafico
-            setMostrarGrafico(true)
-
-            const ctx = chartRef.current.getContext('2d');
-
-            new Chart(ctx, {
-            type: "bar",
+        const chart = new Chart(ctx, {
+            type: esPorCategoria ? 'pie' : 'bar', // si el grafico es el de categoria entonces usamos un pie graph y sino un gafico de barras
             data: {
-                labels: datosLabels,
+                labels,
                 datasets: [{
-                backgroundColor: datosColores,
-                data: datosData
-                }]
+                    label: esPorCategoria ? 'Gastos por categoría' : 'Gastos por origen',
+                    data,
+                    backgroundColor: coloresFondo,
+                }],
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true
-            }
-            });
-        }, []);
-    }
+                maintainAspectRatio: true,
+            },
+        });
 
-    return (
-        <canvas ref={chartRef} style={{ width: '100%', maxWidth: '700px'}}/>
-    );
+
+        return () => {
+            chart.destroy();
+        };
+    }, [datosGrafico, setMostrarTabla, setMostrarGrafico]);
+
+        if (!datosGrafico || datosGrafico.length === 0) {
+            return (
+                <h2 style={{ color: "red", fontWeight: "bold", textAlign: "center" }}>
+                    ❌ Error: datos no encontrados
+                </h2>
+            );
+        }
+
+        return (
+            <canvas ref={chartRef} style={{ width: '100%', maxWidth: '700px' }} />
+        );
 }
 
 export default CrearGraficoGastos;

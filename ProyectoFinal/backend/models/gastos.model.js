@@ -32,7 +32,7 @@ class GastosModel {
         console.log(`devolverGastosMayoresA(${cantidad}) - gastos.model.js`);
         const gastos = await sequelize.query(
             `SELECT * FROM devolverGastosMayoresA(:cantidad, :id_usuario)`,
-            { replacements: { anio, id_usuario }}
+            { replacements: { cantidad, id_usuario }}
         ); // Nos aseguramos que cantidad sea un int si o si en el front asi no se pueden hacer inyecciones de sql
         return gastos[0]; 
     }
@@ -41,7 +41,7 @@ class GastosModel {
         console.log(`devolverGastosMenoresA(${cantidad}) - gastos.model.js`);
         const gastos = await sequelize.query(
             `SELECT * FROM devolverGastosMenoresA(:cantidad, :id_usuario)`,
-            { replacements: { anio, id_usuario }}
+            { replacements: { cantidad, id_usuario }}
         ); // En el frontos aseguramos que cantidad sea un int si o si asi no se pueden hacer inyecciones de sql
         return gastos[0]; 
     }
