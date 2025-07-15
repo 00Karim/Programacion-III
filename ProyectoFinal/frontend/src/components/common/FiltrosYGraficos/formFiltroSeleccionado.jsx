@@ -6,7 +6,7 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
     
     const handleSubmit = async(e) => {
         e.preventDefault();
-        if (!valorInput && route != "/"){ // cuando la ruta es / no hay input, asi que hay que agregar la segunda condicion para que funcione la opcion de mostrar los gastos o ingresos sin ningun filtro
+        if (!valorInput && route !== "/"){ // cuando la ruta es / no hay input, asi que hay que agregar la segunda condicion para que funcione la opcion de mostrar los gastos o ingresos sin ningun filtro
             alert("Error, ingresa un valor!")
         }
         else{

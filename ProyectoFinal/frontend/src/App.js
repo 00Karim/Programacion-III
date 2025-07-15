@@ -69,6 +69,9 @@ function App() {
         { titulo: "Ingresos por mes", valor: "Ingresos agrupados por mes", route: "agrupadosPorMes",  inputType: "number", inputLabel: "Ingresa un anio", esGrafico: true}
     ];
 
+    console.log(operacionSeleccionadaGastos); // comentamos para que no salga un warning
+    console.log(operacionSeleccionadaIngreso);
+
     return (
         <>
             { token ? // mostramos un menu de login hasta que el usuario ingrese credenciales correctas
@@ -76,9 +79,9 @@ function App() {
                     <div className="App">
                         <h1>Administrador de gastos</h1>
                         <div>
-                            <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false), setMostrarFormularioGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                            <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos), setCrearFormGastos(false), setMostrarGraficosGastos(false), setMostrarTablaGastos(false), setMostrarFormularioGastos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
-                            <button onClick={ () => {setCrearFormGastos(true), setMostrarGraficosGastos(false), setMostrarTablaGastos(false)}}>Crear</button>
+                            <button onClick={ () => {setElementosOperacionActualGastos(botonesFiltrosGastos); setCrearFormGastos(false); setMostrarGraficosGastos(false); setMostrarTablaGastos(false); setMostrarFormularioGastos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
+                            <button onClick={ () => {setElementosOperacionActualGastos(botonesGraficosGastos); setCrearFormGastos(false); setMostrarGraficosGastos(false); setMostrarTablaGastos(false); setMostrarFormularioGastos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                            <button onClick={ () => {setCrearFormGastos(true); setMostrarGraficosGastos(false); setMostrarTablaGastos(false)}}>Crear</button>
                         </div>
                             {crearFormAgregarGasto ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                                 <CrearGastoForm setMostrarTabla={setMostrarTablaGastos} setMostrarGrafico={setMostrarGraficosGastos} token={token} id_usuario={id_usuario}/> 
@@ -92,9 +95,9 @@ function App() {
                     <div className="App">
                         <h1>Administrador de ingresos</h1>
                         <div>
-                            <button onClick={ () => {setElementosOperacionActualIngresos(botonesFiltrosIngresos), setCrearFormIngresos(false), setMostrarGraficosIngresos(false), setMostrarTablaIngresos(false), setMostrarFormularioIngresos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
-                            <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos), setCrearFormIngresos(false), setMostrarGraficosIngresos(false),setMostrarTablaIngresos(false), setMostrarFormularioIngresos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
-                            <button onClick={ () => {setCrearFormIngresos(true), setMostrarGraficosIngresos(false), setMostrarTablaIngresos(false)}}>Crear</button>
+                            <button onClick={ () => {setElementosOperacionActualIngresos(botonesFiltrosIngresos); setCrearFormIngresos(false); setMostrarGraficosIngresos(false); setMostrarTablaIngresos(false); setMostrarFormularioIngresos(false)}}>Filtros</button> {/* Cuando se elige una operacion que no sea crear entonces tenemos que poner el estado crearFormAgregarGasto en false para que el if statement de abajo ejecute el segundo codigo */}
+                            <button onClick={ () => {setElementosOperacionActualIngresos(botonesGraficosIngresos); setCrearFormIngresos(false); setMostrarGraficosIngresos(false); setMostrarTablaIngresos(false); setMostrarFormularioIngresos(false)}}>Graficos</button> {/*Cuando el usuario toca un boton para poder elegir otro set de operaciones (Filtros, graficos o crear) entonces de debe dejar de mostrar, si es que se renderizaron, la tabla o el grafico que se haya renderizado abajo */}
+                            <button onClick={ () => {setCrearFormIngresos(true); setMostrarGraficosIngresos(false); setMostrarTablaIngresos(false)}}>Crear</button>
                         </div>
                             {crearFormAgregarIngreso ? ( /*Si crear gasto es true entonces el usuario toco el boton de Crear por lo cual vamos a renderizar el form, sino se presiono cualquiera de las otras dos opciones*/
                                 <CrearIngresosForm setMostrarTabla={setMostrarTablaIngresos} setMostrarGrafico={setMostrarGraficosIngresos} token={token} id_usuario={id_usuario}/> 

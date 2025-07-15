@@ -3,11 +3,12 @@ import Chart from 'chart.js';
 
 function CrearGraficoGastos({ setMostrarTabla, setMostrarGrafico, datosGrafico }) {
     const chartRef = useRef(null);
-    const colores = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#00C49F", "#FF4444", "#0099CC", "#FF66CC"];
-    const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
+   
     useEffect(() => {
         if (!datosGrafico || datosGrafico.length === 0) return; // si datos graficos no tiene nada adentro entonces no ejecutamos el codigo de abajo porque todas las lineas en las que se intenta acceder a algun atributo dentro de un elemento en el array datos da error
+
+        const colores = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#00C49F", "#FF4444", "#0099CC", "#FF66CC"];
+        const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
         setMostrarTabla(false);
         setMostrarGrafico(true);
@@ -15,7 +16,6 @@ function CrearGraficoGastos({ setMostrarTabla, setMostrarGrafico, datosGrafico }
         const labels = []
         const data = []
         const coloresFondo = []
-        let x = 0
         let posColor = 0
 
         const esPorCategoria = !!datosGrafico[0].categoria; // esta constante la vamos a usar para poder crear el grafico dinamicamente dependiendo de cual de los dos se piden (por categoria o por mes)

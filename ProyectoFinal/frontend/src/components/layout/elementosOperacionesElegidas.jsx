@@ -11,7 +11,7 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDa
             setMostrarTabla(false);
             setMostrarGrafico(false);
         }
-    }, [formProps]);
+    }, [formProps, setMostrarTabla, setMostrarGrafico]);
     
     return (
         <>
@@ -21,7 +21,7 @@ function ElementosOperacionesElegidas({ botones, setOperacionSeleccionada, setDa
                     titulo={boton.titulo}
                     operacionSeleccionada={boton.valor}
                     setOperacionSeleccionada={setOperacionSeleccionada}
-                    mostrarFormulario={() => {setFormProps(boton), setMostrarFormulario(true)}} // Esta funcion es puesta dentro del onclick del boton creado entonces cuando el usuario lo clickea se le asigna el array de datos del form a la variable formProps por lo que se cumple la condicion de abajo, por lo que se crea y muestra el for. Por otro lado, si el usuario elige otro set de operaciones entonces se va a dejar de mostrar el form que se mostraba anteriormente porque el boton que hizo que se renderize ya no estaria mas en la pantalla entonces no tendria sentido que siga ahi
+                    mostrarFormulario={() => {setFormProps(boton); setMostrarFormulario(true)}} // Esta funcion es puesta dentro del onclick del boton creado entonces cuando el usuario lo clickea se le asigna el array de datos del form a la variable formProps por lo que se cumple la condicion de abajo, por lo que se crea y muestra el for. Por otro lado, si el usuario elige otro set de operaciones entonces se va a dejar de mostrar el form que se mostraba anteriormente porque el boton que hizo que se renderize ya no estaria mas en la pantalla entonces no tendria sentido que siga ahi
                     esGrafico={boton.esGrafico} // Linea de arriba: 
                 /> 
             ))}

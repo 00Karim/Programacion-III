@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function crearFormLogin( { setToken, setIdUsuario }){
+function CrearFormLogin( { setToken, setIdUsuario }){
 
     const [nombre, setNombre] = useState("")
     const [contrasenia, setContrasenia] = useState("")
@@ -52,4 +52,4 @@ function crearFormLogin( { setToken, setIdUsuario }){
     
 }
 
-export default crearFormLogin;
+export default CrearFormLogin;
