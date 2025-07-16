@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import FormLogin from './components/common/Login/formLogin';
 
@@ -17,6 +17,11 @@ import './App.css';
 
 
 function App() {
+
+    useEffect(() => {
+        localStorage.removeItem('token'); // borramos el token porque no dio el tiempo para hacer una variable de estado que detecte si el token es valido o no para mostrar el menu login. Porque a vces pasa que el usuario se va, el token sigue existiendo entonces se muestra el menu del adminstrador de gastos, pero el token no es valido por lo cual el usuario no puede usar las funciones de la app y tampoco puede ingresar sus credenciales para usarlas
+        setToken('') // seteamos la variable de estado en nada asi se ven los cambios en tiempo real, sino el usuario tendria que entrar dos veces a la pagina
+    }, []);
 
     const [token, setToken] = useState(localStorage.getItem("token") || null); // con esta variable de estado, si un usuario ingresa las credenciales correctas entonces se deja de mostrar el form de login y se muestra el resto de la app para que pueda usarla
     const [id_usuario, setIdUsuario] = useState("") // en esta variable guardamos el id_usuario para poder usarlo cuando creamos un nuevo gasto o ingreso
@@ -75,7 +80,7 @@ function App() {
     return (
         <>
             { token ? // mostramos un menu de login hasta que el usuario ingrese credenciales correctas
-                <> {/* TODO: Podriamos agregar un boton de cerrar sesion que borre el token del localstorage --> se cambia token a vacio con setToken("") y al cambiar el estado se mostraria el login nuevamente*/}
+                <> 
                     <div className="App">
                         <h1>Administrador de gastos</h1>
                         <div>

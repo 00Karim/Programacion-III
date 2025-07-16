@@ -1,7 +1,5 @@
 const { Gastos, sequelize } = require('./index')
 
-// TODO: Poner try catch en todas las funciones
-
 class GastosModel {
 
     devolverGastos = async (id_usuario) => {
@@ -74,7 +72,7 @@ class GastosModel {
     }
 
     crearGasto = async (categoria, cantidad, fecha, id_usuario) => {
-        console.log("crearGasto - gastos.model.js"); // TODO: Validar el tipo de los parametros aca o en el front o en ambas
+        console.log("crearGasto - gastos.model.js"); 
         await sequelize.query(
             `SELECT agregarUnGasto(:categoria, :cantidad, :fecha, :id_usuario)`,
             { replacements: {categoria, cantidad, fecha, id_usuario} }

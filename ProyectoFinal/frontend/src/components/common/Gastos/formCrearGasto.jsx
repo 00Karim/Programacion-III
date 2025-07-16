@@ -16,18 +16,19 @@ function CrearGastoForm({ setMostrarTabla, setMostrarGrafico, token, id_usuario 
     return (
         <form onSubmit={
             async (e) => {
+                e.preventDefault()
                 if (!categoria){
                     alert("Error, ingresa una categoria!")
+                    return
                 }
-                else if(!cantidad){
+                if(!cantidad){
                     alert("Error, ingresa una cantidad!")
+                    return
                 }
-                else if(!fecha){
+                if(!fecha){
                     alert("Error, ingresa una fecha!")
+                    return
                 }
-                e.preventDefault()
-                // Con el codigo siguiente guardamos el input del usuario en variables y hacemos el fetch para agregar el gasto a la base de datos
-                // TODO: IMPORTANTE: VALIDAR INPUT PARA QUE EL USUARIO NO PUEDA INGRESAR UN VALOR VACIO. SI NO HACEMOS ESTO DA ERROR INTERNO DEL SERVIDOR Y SE CAE TODO
                 await fetch('/api/gastos/', 
                     {
                         method: 'POST', 

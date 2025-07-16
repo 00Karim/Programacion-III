@@ -55,7 +55,6 @@ function CrearFormFiltro({inputType, inputLabel, inputPlaceholder, route, setDat
             setMostrarTabla(false)
         }
     }
-    // TODO: IMPORTANTE: VALIDAR EL INPUT DEL USUARIO PARA QUE NO PUEDA INGRESAR VALORES VACIOS O INVALIDOS!!!!!!!!!!!!
     if (!esGrafico){
         return (
             <>    

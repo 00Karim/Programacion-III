@@ -1,7 +1,6 @@
 const { Ingresos, sequelize } = require('./index')
 
 class IngresosModel{
-    // TODO: Crear las funciones necesarias (basicamente: copiar lo de ingresos.model.js y cambiar las variables, textos y queries
 
     devolverIngresos = async (id_usuario) => {
         console.log("devolverIngresos() - ingresos.model.js");
@@ -79,7 +78,7 @@ class IngresosModel{
     }
 
     crearIngreso = async (origen, cantidad, fecha, id_usuario) => {
-        console.log("crearIngreso - ingresos.model.js"); // TODO: Validar el tipo de los parametros aca o en el front o en ambas
+        console.log("crearIngreso - ingresos.model.js"); 
         await sequelize.query(
             `SELECT agregarUnIngreso(:origen, :cantidad, :fecha, :id_usuario)`,
             { replacements: { origen, cantidad, fecha, id_usuario } }
